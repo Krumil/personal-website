@@ -1,0 +1,7 @@
+{
+  "version": "1.0",
+  "project_type": "next.js",
+  "typescript": true,
+  "tailwind": true,
+  "shadcn_ui": true
+}
