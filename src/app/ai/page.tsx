@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Brain, ArrowLeft, ExternalLink, Bot, MessageSquare, Database, Search } from "lucide-react";
+import { Brain, ArrowLeft } from "lucide-react";
 
 // Project card component
 const ProjectCard = ({ title, description, tech }: { title: string; description: string; tech: string[] }) => (
@@ -111,7 +111,7 @@ export default function AIProjects() {
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">
-                            {["LangChain", "OpenAI GPT-4", "Vector Search", "AI Agents"].map((tag, index) => (
+                            {["LangChain", "OpenAI GPT-4", "Vector Search", "AI Agents"].map((tag) => (
                                 <span
                                     key={tag}
                                     className="px-3 py-1 bg-zinc-900/50 text-gray-300 rounded-full border border-zinc-700 text-sm"
