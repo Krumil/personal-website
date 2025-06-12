@@ -35,7 +35,6 @@ export default function RootLayout({
                     numSquares={60}
                     maxOpacity={0.15}
                     duration={2}
-                    repeatDelay={1}
                     className={cn(
                         "fixed inset-0 -z-10 skew-y-12",
                         "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"

@@ -12,10 +12,10 @@ import { useRouter } from "next/navigation";
 const Hyperspeed = dynamic(() => import("@/components/ui/hyperspeed"), { ssr: false });
 
 export default function QuantumPortfolio() {
-    const [selectedUniverse, setSelectedUniverse] = useState<string | null>(null);
-    const [isCollapsing, setIsCollapsing] = useState(false);
-
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_selectedUniverse, setSelectedUniverse] = useState<string | null>(null);
+    const [isCollapsing, setIsCollapsing] = useState(false);
 
     // Check localStorage for previous universe selection
     useEffect(() => {
