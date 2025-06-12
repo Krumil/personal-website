@@ -22,7 +22,7 @@ export default function Header() {
         { href: "/", label: "Home", icon: Home },
         { href: "/ai", label: "AI", icon: Brain },
         { href: "/blockchain", label: "Blockchain", icon: Blocks },
-        { href: "/full-stack", label: "Full Stack", icon: Code },
+        { href: "/fullstack", label: "Full Stack", icon: Code },
     ];
 
     return (

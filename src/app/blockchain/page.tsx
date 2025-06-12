@@ -3,31 +3,16 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Blocks, ArrowLeft } from "lucide-react";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 
-// Project card component
-const ProjectCard = ({ title, description, tech }: { title: string; description: string; tech: string[] }) => (
-    <motion.div
-        className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        whileHover={{ y: -2 }}
-    >
-        <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-        <p className="text-gray-300 text-sm leading-relaxed mb-4">{description}</p>
-
-        <div className="flex flex-wrap gap-2">
-            {tech.map((item, index) => (
-                <span
-                    key={index}
-                    className="px-2 py-1 bg-orange-500/20 text-orange-300 text-xs rounded border border-orange-500/30"
-                >
-                    {item}
-                </span>
-            ))}
-        </div>
-    </motion.div>
-);
+// Bento-grid layout classes for up to five cards
+const bentoClasses = [
+    "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+    "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+    "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+    "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+    "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+];
 
 export default function BlockchainProjects() {
     const blockchainProjects = [
@@ -65,7 +50,7 @@ export default function BlockchainProjects() {
     ];
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-transparent">
             <div className="relative z-10">
                 {/* Header */}
                 <header className="px-8 py-6">
@@ -76,15 +61,15 @@ export default function BlockchainProjects() {
                     >
                         <button
                             onClick={() => window.history.back()}
-                            className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors"
+                            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
                         >
                             <ArrowLeft className="w-5 h-5" />
                             <span>Back</span>
                         </button>
 
-                        <div className="flex items-center space-x-2 px-4 py-2 bg-zinc-900/50 backdrop-blur-sm rounded-full border border-zinc-800">
-                            <Blocks className="w-5 h-5 text-white" />
-                            <span className="text-white text-sm font-medium">Blockchain Projects</span>
+                        <div className="flex items-center space-x-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border">
+                            <Blocks className="w-5 h-5 text-foreground" />
+                            <span className="text-foreground text-sm font-medium">Blockchain Projects</span>
                         </div>
                     </motion.div>
                 </header>
@@ -96,11 +81,13 @@ export default function BlockchainProjects() {
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-4xl mx-auto space-y-6"
                     >
-                        <Blocks className="w-16 h-16 text-white mx-auto mb-6" />
+                        <Blocks className="w-16 h-16 text-foreground mx-auto mb-6" />
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">Blockchain Projects</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
+                            Blockchain Projects
+                        </h1>
 
-                        <p className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                             Building decentralized applications with modern Web3 technologies. From DeFi dashboards to
                             smart contract integration and blockchain data visualization.
                         </p>
@@ -109,7 +96,7 @@ export default function BlockchainProjects() {
                             {["Smart Contracts", "DeFi", "Web3", "Ethereum"].map((tag) => (
                                 <span
                                     key={tag}
-                                    className="px-3 py-1 bg-zinc-900/50 text-gray-300 rounded-full border border-zinc-700 text-sm"
+                                    className="px-3 py-1 bg-card/50 text-muted-foreground rounded-full border border-border text-sm"
                                 >
                                     {tag}
                                 </span>
@@ -127,25 +114,26 @@ export default function BlockchainProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-white mb-4">Featured Projects</h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto">
+                            <h2 className="text-3xl font-bold text-foreground mb-4">Featured Projects</h2>
+                            <p className="text-muted-foreground max-w-2xl mx-auto">
                                 Web3 applications leveraging blockchain technology and smart contract integration.
                             </p>
                         </motion.div>
 
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <BentoGrid className="lg:grid-rows-3">
                             {blockchainProjects.map((project, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                >
-                                    <ProjectCard {...project} />
-                                </motion.div>
+                                <BentoCard
+                                    key={project.title}
+                                    Icon={Blocks}
+                                    name={project.title}
+                                    description={project.description}
+                                    href="#"
+                                    cta="Learn more"
+                                    background={<img className="absolute -right-20 -top-20 opacity-60" />}
+                                    className={bentoClasses[index] ?? ""}
+                                />
                             ))}
-                        </div>
+                        </BentoGrid>
                     </div>
                 </section>
 
@@ -158,8 +146,8 @@ export default function BlockchainProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-white mb-4">Blockchain Skills</h2>
-                            <p className="text-gray-400">
+                            <h2 className="text-3xl font-bold text-foreground mb-4">Blockchain Skills</h2>
+                            <p className="text-muted-foreground">
                                 Technologies and frameworks for building decentralized applications.
                             </p>
                         </motion.div>
@@ -168,13 +156,13 @@ export default function BlockchainProjects() {
                             {skills.map((skill, index) => (
                                 <motion.div
                                     key={index}
-                                    className="flex items-center space-x-3 p-4 bg-gray-900/30 rounded-lg border border-gray-700"
+                                    className="flex items-center space-x-3 p-4 bg-card/30 rounded-lg border border-border"
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1 }}
                                 >
-                                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                                    <span className="text-gray-300">{skill}</span>
+                                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                                    <span className="text-muted-foreground">{skill}</span>
                                 </motion.div>
                             ))}
                         </div>

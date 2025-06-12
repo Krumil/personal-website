@@ -16,10 +16,10 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                 <div className="relative h-full rounded-[50px] bg-gradient-to-br from-zinc-900 to-black shadow-2xl transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[box-shadow:rgba(0,0,0,0.3)_30px_50px_25px_-40px,rgba(0,0,0,0.1)_0px_25px_30px_0px] group-hover:[transform:rotate3d(1,1,0,30deg)]">
                     <div className="absolute inset-2 rounded-[44px] border-b border-l border-white/20 bg-gradient-to-b from-white/30 to-white/10 backdrop-blur-sm [transform-style:preserve-3d] [transform:translate3d(0,0,25px)]"></div>
                     <div className="absolute [transform:translate3d(0,0,26px)]">
-                        <div className="px-7 pt-[80px] pb-0 text-start space-y-2">
-                            <Icon className="h-10 w-10 text-white" />
+                        <div className="px-7 pt-[100px] pb-0 text-start space-y-2">
+                            {/* <Icon className="h-10 w-10 text-white" /> */}
                             <span className="block text-xl font-black text-white">{title}</span>
-                            <span className="mt-2 block text-[15px] text-zinc-300">{description}</span>
+                            <span className="mt-4 block text-[16px] text-zinc-300">{description}</span>
                         </div>
                     </div>
                     <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between [transform-style:preserve-3d] [transform:translate3d(0,0,26px)]">

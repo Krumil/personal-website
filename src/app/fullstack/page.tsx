@@ -3,31 +3,16 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Code, ArrowLeft, Globe, Server } from "lucide-react";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 
-// Project card component
-const ProjectCard = ({ title, description, tech }: { title: string; description: string; tech: string[] }) => (
-    <motion.div
-        className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-green-500/50 transition-colors"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        whileHover={{ y: -2 }}
-    >
-        <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-        <p className="text-gray-300 text-sm leading-relaxed mb-4">{description}</p>
-
-        <div className="flex flex-wrap gap-2">
-            {tech.map((item, index) => (
-                <span
-                    key={index}
-                    className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded border border-green-500/30"
-                >
-                    {item}
-                </span>
-            ))}
-        </div>
-    </motion.div>
-);
+// Bento-grid layout classes for up to five cards
+const bentoClasses = [
+    "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+    "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+    "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+    "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+    "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+];
 
 export default function FullStackProjects() {
     const fullStackProjects = [
@@ -83,7 +68,7 @@ export default function FullStackProjects() {
     ];
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-transparent">
             <div className="relative z-10">
                 {/* Header */}
                 <header className="px-8 py-6">
@@ -94,15 +79,15 @@ export default function FullStackProjects() {
                     >
                         <button
                             onClick={() => window.history.back()}
-                            className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors"
+                            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
                         >
                             <ArrowLeft className="w-5 h-5" />
                             <span>Back</span>
                         </button>
 
-                        <div className="flex items-center space-x-2 px-4 py-2 bg-zinc-900/50 backdrop-blur-sm rounded-full border border-zinc-800">
-                            <Code className="w-5 h-5 text-white" />
-                            <span className="text-white text-sm font-medium">Full Stack Projects</span>
+                        <div className="flex items-center space-x-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border">
+                            <Code className="w-5 h-5 text-foreground" />
+                            <span className="text-foreground text-sm font-medium">Full Stack Projects</span>
                         </div>
                     </motion.div>
                 </header>
@@ -114,11 +99,13 @@ export default function FullStackProjects() {
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-4xl mx-auto space-y-6"
                     >
-                        <Code className="w-16 h-16 text-white mx-auto mb-6" />
+                        <Code className="w-16 h-16 text-foreground mx-auto mb-6" />
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">Full Stack Projects</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
+                            Full Stack Projects
+                        </h1>
 
-                        <p className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                             End-to-end web applications with modern React/Next.js frontends and robust Node.js backends.
                             Building complete systems from intuitive UIs to scalable server architectures.
                         </p>
@@ -127,7 +114,7 @@ export default function FullStackProjects() {
                             {["React/Next.js", "Node.js", "TypeScript", "PostgreSQL"].map((tag) => (
                                 <span
                                     key={tag}
-                                    className="px-3 py-1 bg-zinc-900/50 text-gray-300 rounded-full border border-zinc-700 text-sm"
+                                    className="px-3 py-1 bg-card/50 text-muted-foreground rounded-full border border-border text-sm"
                                 >
                                     {tag}
                                 </span>
@@ -145,25 +132,26 @@ export default function FullStackProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-white mb-4">Featured Projects</h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto">
+                            <h2 className="text-3xl font-bold text-foreground mb-4">Featured Projects</h2>
+                            <p className="text-muted-foreground max-w-2xl mx-auto">
                                 Complete web applications built with modern full-stack technologies and best practices.
                             </p>
                         </motion.div>
 
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <BentoGrid className="lg:grid-rows-3">
                             {fullStackProjects.map((project, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                >
-                                    <ProjectCard {...project} />
-                                </motion.div>
+                                <BentoCard
+                                    key={project.title}
+                                    Icon={Code}
+                                    name={project.title}
+                                    description={project.description}
+                                    href="#"
+                                    cta="Learn more"
+                                    background={<img className="absolute -right-20 -top-20 opacity-60" />}
+                                    className={bentoClasses[index] ?? ""}
+                                />
                             ))}
-                        </div>
+                        </BentoGrid>
                     </div>
                 </section>
 
@@ -176,8 +164,8 @@ export default function FullStackProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-white mb-4">Full Stack Skills</h2>
-                            <p className="text-gray-400">
+                            <h2 className="text-3xl font-bold text-foreground mb-4">Full Stack Skills</h2>
+                            <p className="text-muted-foreground">
                                 Frontend and backend technologies for building complete web applications.
                             </p>
                         </motion.div>
@@ -186,20 +174,20 @@ export default function FullStackProjects() {
                             {/* Frontend Skills */}
                             <div>
                                 <div className="flex items-center space-x-3 mb-6">
-                                    <Globe className="w-6 h-6 text-green-500" />
-                                    <h3 className="text-xl font-semibold text-white">Frontend</h3>
+                                    <Globe className="w-6 h-6 text-white" />
+                                    <h3 className="text-xl font-semibold text-foreground">Frontend</h3>
                                 </div>
                                 <div className="space-y-3">
                                     {frontendSkills.map((skill, index) => (
                                         <motion.div
                                             key={index}
-                                            className="flex items-center space-x-3 p-3 bg-gray-900/30 rounded-lg border border-gray-700"
+                                            className="flex items-center space-x-3 p-3 bg-card/30 rounded-lg border border-border"
                                             initial={{ opacity: 0, x: -20 }}
                                             whileInView={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.1 }}
                                         >
-                                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                            <span className="text-gray-300 text-sm">{skill}</span>
+                                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                                            <span className="text-muted-foreground text-sm">{skill}</span>
                                         </motion.div>
                                     ))}
                                 </div>
@@ -208,20 +196,20 @@ export default function FullStackProjects() {
                             {/* Backend Skills */}
                             <div>
                                 <div className="flex items-center space-x-3 mb-6">
-                                    <Server className="w-6 h-6 text-blue-500" />
-                                    <h3 className="text-xl font-semibold text-white">Backend</h3>
+                                    <Server className="w-6 h-6 text-white" />
+                                    <h3 className="text-xl font-semibold text-foreground">Backend</h3>
                                 </div>
                                 <div className="space-y-3">
                                     {backendSkills.map((skill, index) => (
                                         <motion.div
                                             key={index}
-                                            className="flex items-center space-x-3 p-3 bg-gray-900/30 rounded-lg border border-gray-700"
+                                            className="flex items-center space-x-3 p-3 bg-card/30 rounded-lg border border-border"
                                             initial={{ opacity: 0, x: -20 }}
                                             whileInView={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.1 }}
                                         >
-                                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                            <span className="text-gray-300 text-sm">{skill}</span>
+                                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                                            <span className="text-muted-foreground text-sm">{skill}</span>
                                         </motion.div>
                                     ))}
                                 </div>
