@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Blocks, ArrowLeft, TrendingUp, Wallet, BarChart3, Globe } from "lucide-react";
+import { Blocks, ArrowLeft } from "lucide-react";
 
 // Project card component
 const ProjectCard = ({ title, description, tech }: { title: string; description: string; tech: string[] }) => (
@@ -106,7 +106,7 @@ export default function BlockchainProjects() {
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">
-                            {["Smart Contracts", "DeFi", "Web3", "Ethereum"].map((tag, index) => (
+                            {["Smart Contracts", "DeFi", "Web3", "Ethereum"].map((tag) => (
                                 <span
                                     key={tag}
                                     className="px-3 py-1 bg-zinc-900/50 text-gray-300 rounded-full border border-zinc-700 text-sm"

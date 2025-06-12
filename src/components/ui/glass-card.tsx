@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
 
 // Props types for external icon component
 type SVGIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

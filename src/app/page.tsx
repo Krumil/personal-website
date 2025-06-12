@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Brain, Blocks, Eye, Zap, Code } from "lucide-react";
+import { Brain, Blocks, Zap, Code } from "lucide-react";
 import GlassCard from "@/components/ui/glass-card";
 
 export default function QuantumPortfolio() {

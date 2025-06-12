@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Code, ArrowLeft, Globe, Server, Database, Zap } from "lucide-react";
+import { Code, ArrowLeft, Globe, Server } from "lucide-react";
 
 // Project card component
 const ProjectCard = ({ title, description, tech }: { title: string; description: string; tech: string[] }) => (
@@ -124,7 +124,7 @@ export default function FullStackProjects() {
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">
-                            {["React/Next.js", "Node.js", "TypeScript", "PostgreSQL"].map((tag, index) => (
+                            {["React/Next.js", "Node.js", "TypeScript", "PostgreSQL"].map((tag) => (
                                 <span
                                     key={tag}
                                     className="px-3 py-1 bg-zinc-900/50 text-gray-300 rounded-full border border-zinc-700 text-sm"
