@@ -2,18 +2,31 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Brain, ArrowLeft } from "lucide-react";
+import { Brain } from "lucide-react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { ProjectHeader } from "@/components/ui/project-header";
 import Image from "next/image";
 
-// Bento-grid layout classes for up to five cards
-const bentoClasses = [
-    "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
-    "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
-    "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
-    "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
-    "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
-];
+const getRandomizedBentoClasses = () => {
+    const baseClasses = [
+        "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+        "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+        "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+        "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+        "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+    ];
+
+    // Fisher-Yates shuffle algorithm
+    const shuffled = [...baseClasses];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
+};
+
+const bentoClasses = getRandomizedBentoClasses();
 
 export default function AIProjects() {
     const aiProjects = [
@@ -58,27 +71,7 @@ export default function AIProjects() {
     return (
         <div className="min-h-screen bg-transparent">
             <div className="relative z-10">
-                {/* Header */}
-                <header className="px-8 py-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-between"
-                    >
-                        <button
-                            onClick={() => window.history.back()}
-                            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                            <span>Back</span>
-                        </button>
-
-                        <div className="flex items-center space-x-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border">
-                            <Brain className="w-5 h-5 text-foreground" />
-                            <span className="text-foreground text-sm font-medium">AI Projects</span>
-                        </div>
-                    </motion.div>
-                </header>
+                <ProjectHeader title="AI Projects" icon={Brain} showIcon={true} />
 
                 {/* Hero Section */}
                 <section className="px-8 py-16 text-center">
@@ -87,8 +80,6 @@ export default function AIProjects() {
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-4xl mx-auto space-y-6"
                     >
-                        <Brain className="w-16 h-16 text-foreground mx-auto mb-6" />
-
                         <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">AI Projects</h1>
 
                         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
@@ -129,7 +120,6 @@ export default function AIProjects() {
                             {aiProjects.map((project, index) => (
                                 <BentoCard
                                     key={project.title}
-                                    Icon={Brain}
                                     name={project.title}
                                     description={project.description}
                                     href="#"
@@ -139,6 +129,8 @@ export default function AIProjects() {
                                             src="/test.avif"
                                             alt="Next.js Logo"
                                             className="absolute -right-20 -top-20 opacity-60"
+                                            width={100}
+                                            height={100}
                                         />
                                     }
                                     className={bentoClasses[index] ?? ""}

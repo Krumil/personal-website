@@ -2,8 +2,9 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Blocks, ArrowLeft } from "lucide-react";
+import { Blocks } from "lucide-react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { ProjectHeader } from "@/components/ui/project-header";
 import Image from "next/image";
 
 // Bento-grid layout classes for up to five cards
@@ -53,27 +54,7 @@ export default function BlockchainProjects() {
     return (
         <div className="min-h-screen bg-transparent">
             <div className="relative z-10">
-                {/* Header */}
-                <header className="px-8 py-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-between"
-                    >
-                        <button
-                            onClick={() => window.history.back()}
-                            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                            <span>Back</span>
-                        </button>
-
-                        <div className="flex items-center space-x-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border">
-                            <Blocks className="w-5 h-5 text-foreground" />
-                            <span className="text-foreground text-sm font-medium">Blockchain Projects</span>
-                        </div>
-                    </motion.div>
-                </header>
+                <ProjectHeader title="Blockchain Projects" icon={Blocks} />
 
                 {/* Hero Section */}
                 <section className="px-8 py-16 text-center">
@@ -125,7 +106,6 @@ export default function BlockchainProjects() {
                             {blockchainProjects.map((project, index) => (
                                 <BentoCard
                                     key={project.title}
-                                    Icon={Blocks}
                                     name={project.title}
                                     description={project.description}
                                     href="#"
@@ -135,6 +115,8 @@ export default function BlockchainProjects() {
                                             src="/test.avif"
                                             alt="Next.js Logo"
                                             className="absolute -right-20 -top-20 opacity-60"
+                                            width={100}
+                                            height={100}
                                         />
                                     }
                                     className={bentoClasses[index] ?? ""}
