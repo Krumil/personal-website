@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 // Props types for external icon component

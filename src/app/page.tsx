@@ -77,20 +77,6 @@ export default function QuantumPortfolio() {
                 >
                     <Hyperspeed />
                 </motion.div>
-
-                {/* <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="space-y-3 sm:space-y-4 text-center"
-                    >
-                        <h2 className="text-xl sm:text-2xl font-bold text-foreground">Preparing jump…</h2>
-                        <p className="text-sm sm:text-base text-muted-foreground px-4">
-                            Taking you to {selectedUniverse} projects
-                        </p>
-                    </motion.div>
-                </div> */}
             </div>
         );
     }

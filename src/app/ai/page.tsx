@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { Brain, ArrowLeft } from "lucide-react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import Image from "next/image";
 
 // Bento-grid layout classes for up to five cards
 const bentoClasses = [
@@ -133,7 +134,13 @@ export default function AIProjects() {
                                     description={project.description}
                                     href="#"
                                     cta="Learn more"
-                                    background={<img className="absolute -right-20 -top-20 opacity-60" />}
+                                    background={
+                                        <Image
+                                            src="/test.avif"
+                                            alt="Next.js Logo"
+                                            className="absolute -right-20 -top-20 opacity-60"
+                                        />
+                                    }
                                     className={bentoClasses[index] ?? ""}
                                 />
                             ))}
