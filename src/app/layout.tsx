@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Suspense } from "react";
-import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
+import { AnimatedGridPatternOptimized } from "@/components/ui/animated-grid-pattern-optimized";
+import { PerformanceMonitor } from "@/components/performance-monitor";
+import { PerformanceProvider } from "@/components/performance-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -44,21 +46,34 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="dark">
+            <head>
+                {/* Preload critical fonts for better performance */}
+                <link rel="preload" href="/fonts/Supreme-Regular.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/Technor-Regular.woff2" as="font" type="font/woff2" crossOrigin="" />
+                {/* DNS prefetch for better performance */}
+                <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+                <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="" />
+            </head>
             <body className={`${supreme.variable} ${technor.variable} antialiased`}>
-                {/* Global Animated Grid Background */}
-                <AnimatedGridPattern
-                    numSquares={60}
-                    maxOpacity={0.15}
-                    duration={2}
-                    className={cn(
-                        "fixed inset-0 -z-10 skew-y-12",
-                        "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
-                    )}
-                />
+                <PerformanceProvider>
+                    {/* Global Animated Grid Background - Optimized */}
+                    <AnimatedGridPatternOptimized
+                        numSquares={40}
+                        maxOpacity={0.15}
+                        duration={3}
+                        className={cn(
+                            "fixed inset-0 -z-10 skew-y-12",
+                            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
+                        )}
+                    />
 
-                <Suspense fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}>
-                    {children}
-                </Suspense>
+                    <PerformanceMonitor />
+                    <Suspense
+                        fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}
+                    >
+                        {children}
+                    </Suspense>
+                </PerformanceProvider>
             </body>
         </html>
     );

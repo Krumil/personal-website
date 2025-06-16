@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, startTransition, useTransition } from "react";
 import { motion } from "motion/react";
 import { Brain, Blocks, Code } from "lucide-react";
 import GlassCard from "@/components/ui/glass-card";
 import { HyperText } from "@/components/ui/hyper-text";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-
-// Dynamically import because Hyperspeed relies on browser-only APIs (WebGL).
-const Hyperspeed = dynamic(() => import("@/components/ui/hyperspeed"), { ssr: false });
+import Hyperspeed from "@/components/ui/hyperspeed";
+import MiniNavbar from "@/components/MiniNavbar";
 
 export default function Portfolio() {
     const router = useRouter();
-    // State for triggering the hyperspace transition effect
     const [isCollapsing, setIsCollapsing] = useState(false);
 
     const handleUniverseSelection = (route: string) => {
-        setIsCollapsing(true);
+        setTimeout(() => {
+            setIsCollapsing(true);
+        }, 100);
 
+        // Prefetch the route for faster navigation
         router.prefetch(`/${route}`);
 
         setTimeout(() => {
@@ -71,7 +71,14 @@ export default function Portfolio() {
     }
 
     return (
-        <Suspense fallback={<Hyperspeed />}>
+        <Suspense
+            fallback={
+                <div className="min-h-screen bg-black flex items-center justify-center">
+                    <div className="text-white text-sm animate-pulse">Loading portfolio...</div>
+                </div>
+            }
+        >
+            <MiniNavbar />
             <div className="min-h-screen bg-transparent flex flex-col items-center justify-center px-4 py-8 sm:py-12">
                 <motion.div
                     initial="hidden"
@@ -86,10 +93,10 @@ export default function Portfolio() {
                         />
 
                         <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto px-4">
-                            Full-stack developer building innovative applications at the intersection of{" "}
-                            <span className="text-foreground font-medium">artificial intelligence</span> and{" "}
-                            <span className="text-foreground font-medium">blockchain technology</span>. Choose your area
-                            of interest to explore my work.
+                            I love building things that solve real problems. Whether it's creating{" "}
+                            <span className="text-foreground font-medium">AI-powered tools</span> that make life easier
+                            or <span className="text-foreground font-medium">blockchain apps</span> that actually
+                            work. I'm all about turning cool ideas into something you can actually use.
                         </p>
                     </motion.div>
 
@@ -105,21 +112,22 @@ export default function Portfolio() {
                                 universe: "AI",
                                 Icon: Brain,
                                 label: "AI",
-                                description: "AI/ML integrations, LangChain, and intelligent applications.",
+                                description:
+                                    "Smart apps that actually understand what you need and help you get stuff done.",
                                 route: "ai",
                             },
                             {
                                 universe: "Blockchain",
                                 Icon: Blocks,
                                 label: "Blockchain",
-                                description: "DeFi dashboards, smart contracts, and Web3 applications.",
+                                description: "Web3 apps that don't suck. Clean interfaces, real utility, no fluff.",
                                 route: "blockchain",
                             },
                             {
                                 universe: "Full Stack",
                                 Icon: Code,
                                 label: "Full Stack",
-                                description: "React/Next.js, Node.js, and end-to-end development.",
+                                description: "End-to-end web apps built with modern tools and a focus on great UX.",
                                 route: "fullstack",
                             },
                         ].map(({ universe, Icon, label, description, route }) => (
