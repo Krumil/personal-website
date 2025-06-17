@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Suspense } from "react";
 import { AnimatedGridPatternOptimized } from "@/components/ui/animated-grid-pattern-optimized";

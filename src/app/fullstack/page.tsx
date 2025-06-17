@@ -88,9 +88,9 @@ export default function FullStackProjects() {
                         </h1>
 
                         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                            I love building complete web experiences. The kind where everything just works together smoothly. 
-                            Fast frontends that feel great to use, solid backends that don't break, and all the messy bits 
-                            in between that make modern web apps actually function.
+                            I love building complete web experiences. The kind where everything just works together
+                            smoothly. Fast frontends that feel great to use, solid backends that don&apos;t break, and
+                            all the messy bits in between that make modern web apps actually function.
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">

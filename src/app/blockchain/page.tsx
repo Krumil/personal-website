@@ -70,9 +70,10 @@ export default function BlockchainProjects() {
                         </h1>
 
                         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                            Web3 can be confusing and overwhelming. I try to build apps that make it simple and actually useful. 
-                            Think clean dashboards for tracking your DeFi positions, tools that help you understand what's happening 
-                            on-chain, and interfaces that don't require a PhD in crypto to use.
+                            Web3 can be confusing and overwhelming. I try to build apps that make it simple and actually
+                            useful. Think clean dashboards for tracking your DeFi positions, tools that help you
+                            understand what&apos;s happening on-chain, and interfaces that don&apos;t require a PhD in
+                            crypto to use.
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -97,10 +98,10 @@ export default function BlockchainProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-foreground mb-4">What I've Built</h2>
+                            <h2 className="text-3xl font-bold text-foreground mb-4">What I&apos;ve Built</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
-                                From staking dashboards that actually make sense to gaming analytics that help you track your NFTs.
-                                Here's some Web3 stuff that people actually want to use.
+                                From staking dashboards that actually make sense to gaming analytics that help you track
+                                your NFTs. Here&apos;s some Web3 stuff that people actually want to use.
                             </p>
                         </motion.div>
 
@@ -139,7 +140,8 @@ export default function BlockchainProjects() {
                         >
                             <h2 className="text-3xl font-bold text-foreground mb-4">My Web3 Stack</h2>
                             <p className="text-muted-foreground">
-                                The blockchain tools I use to build apps that actually work (and don't drain your wallet in gas fees).
+                                The blockchain tools I use to build apps that actually work (and don&apos;t drain your
+                                wallet in gas fees).
                             </p>
                         </motion.div>
 

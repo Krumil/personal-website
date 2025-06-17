@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, startTransition, use } from "react";
+import { createContext, useContext, useEffect, useState, startTransition } from "react";
 
 interface PerformanceContextType {
     isOptimized: boolean;

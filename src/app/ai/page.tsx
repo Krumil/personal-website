@@ -83,9 +83,10 @@ export default function AIProjects() {
                         <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">AI Projects</h1>
 
                         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                            I'm fascinated by making AI actually useful. These projects range from chatbots that don't give you 
-                            generic responses to agents that can handle blockchain transactions for you. The goal? AI that feels 
-                            less like talking to a robot and more like having a smart assistant.
+                            I&apos;m fascinated by making AI actually useful. These projects range from chatbots that
+                            don&apos;t give you generic responses to agents that can handle blockchain transactions for
+                            you. The goal? AI that feels less like talking to a robot and more like having a smart
+                            assistant.
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-3 mt-8">
@@ -110,10 +111,10 @@ export default function AIProjects() {
                             viewport={{ once: true }}
                             className="text-center mb-12"
                         >
-                            <h2 className="text-3xl font-bold text-foreground mb-4">What I've Built</h2>
+                            <h2 className="text-3xl font-bold text-foreground mb-4">What I&apos;ve Built</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
-                                From fact-checking tools that fight misinformation to crypto agents that actually know what they're doing.
-                                Here's some of the AI stuff I've been working on.
+                                From fact-checking tools that fight misinformation to crypto agents that actually know
+                                what they&apos;re doing. Here&apos;s some of the AI stuff I&apos;ve been working on.
                             </p>
                         </motion.div>
 

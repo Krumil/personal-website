@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense, startTransition, useTransition } from "react";
+import React, { useState, Suspense } from "react";
 import { motion } from "motion/react";
 import { Brain, Blocks, Code } from "lucide-react";
 import GlassCard from "@/components/ui/glass-card";
@@ -93,10 +93,10 @@ export default function Portfolio() {
                         />
 
                         <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto px-4">
-                            I love building things that solve real problems. Whether it's creating{" "}
+                            I love building things that solve real problems. Whether it&apos;s creating{" "}
                             <span className="text-foreground font-medium">AI-powered tools</span> that make life easier
-                            or <span className="text-foreground font-medium">blockchain apps</span> that actually
-                            work. I'm all about turning cool ideas into something you can actually use.
+                            or <span className="text-foreground font-medium">blockchain apps</span> that actually work.
+                            I&apos;m all about turning cool ideas into something you can actually use.
                         </p>
                     </motion.div>
 
@@ -120,7 +120,8 @@ export default function Portfolio() {
                                 universe: "Blockchain",
                                 Icon: Blocks,
                                 label: "Blockchain",
-                                description: "Web3 apps that don't suck. Clean interfaces, real utility, no fluff.",
+                                description:
+                                    "Web3 apps that don&apos;t suck. Clean interfaces, real utility, no fluff.",
                                 route: "blockchain",
                             },
                             {
