@@ -1,29 +1,19 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { Suspense } from "react";
 import { motion } from "motion/react";
 import { Brain, Blocks, Code } from "lucide-react";
 import GlassCard from "@/components/ui/glass-card";
 import { HyperText } from "@/components/ui/hyper-text";
-import { useRouter } from "next/navigation";
-import Hyperspeed from "@/components/ui/hyperspeed";
+import { useRouterTransition } from "@/hooks/useRouterTransition";
+
 import MiniNavbar from "@/components/MiniNavbar";
+import TransitionWrapper from "@/components/TransitionWrapper";
 
 export default function Portfolio() {
-    const router = useRouter();
-    const [isCollapsing, setIsCollapsing] = useState(false);
-
-    const handleUniverseSelection = (route: string) => {
-        setTimeout(() => {
-            setIsCollapsing(true);
-        }, 100);
-
-        // Prefetch the route for faster navigation
-        router.prefetch(`/${route}`);
-
-        setTimeout(() => {
-            router.push(`/${route}`);
-        }, 1000);
+    const { navigate, isNavigating } = useRouterTransition();
+    const handleUniverseSelection = async (route: string) => {
+        await navigate(`/${route}`);
     };
 
     const heroVariant = {
@@ -55,31 +45,17 @@ export default function Portfolio() {
         },
     } as const;
 
-    if (isCollapsing) {
-        return (
-            <div className="relative w-screen h-screen bg-transparent">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="fixed inset-0 flex items-center justify-center bg-black"
-                >
-                    <Hyperspeed />
-                </motion.div>
-            </div>
-        );
-    }
-
     return (
-        <Suspense
-            fallback={
-                <div className="min-h-screen bg-black flex items-center justify-center">
-                    <div className="text-white text-sm animate-pulse">Loading portfolio...</div>
-                </div>
-            }
-        >
-            <MiniNavbar />
-            <div className="min-h-screen bg-transparent flex flex-col items-center justify-center px-4 py-8 sm:py-12">
+        <TransitionWrapper>
+            <Suspense
+                fallback={
+                    <div className="min-h-screen bg-black flex items-center justify-center">
+                        <div className="text-white text-sm animate-pulse">Loading portfolio...</div>
+                    </div>
+                }
+            >
+                <MiniNavbar />
+                <div className="min-h-screen bg-transparent flex flex-col items-center justify-center px-4 py-8 sm:py-12">
                 <motion.div
                     initial="hidden"
                     animate="show"
@@ -132,7 +108,7 @@ export default function Portfolio() {
                                 route: "fullstack",
                             },
                         ].map(({ universe, Icon, label, description, route }) => (
-                            <motion.div
+                            <motion.button
                                 key={universe}
                                 className="relative cursor-pointer flex justify-center"
                                 onClick={() => handleUniverseSelection(route)}
@@ -140,13 +116,16 @@ export default function Portfolio() {
                                 whileHover={{ scale: 1.05, y: -8 }}
                                 whileTap={{ scale: 0.97 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                                style={{ opacity: isNavigating ? 0.7 : 1 }}
+                                disabled={isNavigating}
                             >
                                 <GlassCard title={label} description={description} Icon={Icon} />
-                            </motion.div>
+                            </motion.button>
                         ))}
                     </motion.div>
                 </motion.div>
-            </div>
-        </Suspense>
+                </div>
+            </Suspense>
+        </TransitionWrapper>
     );
 }

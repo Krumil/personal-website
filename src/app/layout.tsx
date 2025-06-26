@@ -6,6 +6,7 @@ import { PerformanceMonitor } from "@/components/performance-monitor";
 import { PerformanceProvider } from "@/components/performance-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { AnimatePresence, motion } from "motion/react";
 
 const supreme = localFont({
     variable: "--font-supreme",

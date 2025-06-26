@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { TransitionLink } from "./TransitionLink";
 
 const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
     const defaultTextColor = "text-gray-300";
@@ -10,12 +11,12 @@ const AnimatedNavLink = ({ href, children }: { href: string; children: React.Rea
     const textFontClass = "font-technor";
 
     return (
-        <a href={href} className={cn("group relative overflow-hidden h-5 flex", textSizeClass)}>
+        <TransitionLink href={href} className={cn("group relative overflow-hidden h-5 flex", textSizeClass)}>
             <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-full">
                 <span className={cn(defaultTextColor, textFontClass)}>{children}</span>
                 <span className={cn(hoverTextColor, textFontClass)}>{children}</span>
             </div>
-        </a>
+        </TransitionLink>
     );
 };
 
@@ -117,13 +118,14 @@ const MiniNavbar: React.FC = () => {
             >
                 <nav className="flex flex-col items-center space-y-4 text-base w-full">
                     {navLinksData.map((link) => (
-                        <a
+                        <TransitionLink
                             key={link.href}
                             href={link.href}
                             className="text-gray-300 hover:text-white transition-colors w-full text-center"
+                            onClick={() => setIsOpen(false)}
                         >
                             {link.label}
-                        </a>
+                        </TransitionLink>
                     ))}
                 </nav>
             </div>
