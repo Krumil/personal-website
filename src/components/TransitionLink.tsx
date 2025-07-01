@@ -4,12 +4,11 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useCallback, useState } from "react";
 import { motion } from "motion/react";
 
-interface TransitionLinkProps {
+interface TransitionLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string;
     children: ReactNode;
     className?: string;
     onClick?: () => void;
-    [key: string]: any;
 }
 
 export function TransitionLink({ 

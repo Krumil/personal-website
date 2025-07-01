@@ -41,6 +41,7 @@ export const PerformanceMonitor = () => {
 
             // Log metrics to console in development
             if (process.env.NODE_ENV === "development") {
+                // eslint-disable-next-line no-console
                 console.log("Performance Metrics:", metrics);
             }
         };
@@ -54,6 +55,7 @@ export const PerformanceMonitor = () => {
                 metrics.lcp = lastEntry.startTime;
 
                 if (process.env.NODE_ENV === "development") {
+                    // eslint-disable-next-line no-console
                     console.log("LCP:", metrics.lcp);
                 }
             });
@@ -66,6 +68,7 @@ export const PerformanceMonitor = () => {
                     metrics.fid = perfEntry.processingStart - perfEntry.startTime;
 
                     if (process.env.NODE_ENV === "development") {
+                        // eslint-disable-next-line no-console
                         console.log("FID:", metrics.fid);
                     }
                 });
@@ -86,6 +89,7 @@ export const PerformanceMonitor = () => {
                 metrics.cls = clsValue;
 
                 if (process.env.NODE_ENV === "development") {
+                    // eslint-disable-next-line no-console
                     console.log("CLS:", metrics.cls);
                 }
             });
@@ -125,9 +129,13 @@ export const PerformanceMonitor = () => {
     useEffect(() => {
         if (process.env.NODE_ENV === "development") {
             // Log initial bundle information
+            // eslint-disable-next-line no-console
             console.log("Performance optimizations active:");
+            // eslint-disable-next-line no-console
             console.log("- Three.js lazy loading: ✓");
+            // eslint-disable-next-line no-console
             console.log("- Optimized grid pattern: ✓");
+            // eslint-disable-next-line no-console
             console.log("- Image optimization ready: ✓");
 
             // Monitor memory usage
@@ -139,6 +147,7 @@ export const PerformanceMonitor = () => {
                 }
 
                 const memory = (performance as unknown as { memory: MemoryInfo }).memory;
+                // eslint-disable-next-line no-console
                 console.log("Memory usage:", {
                     used: `${Math.round(memory.usedJSHeapSize / 1048576)} MB`,
                     total: `${Math.round(memory.totalJSHeapSize / 1048576)} MB`,

@@ -65,14 +65,23 @@ export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({ childr
 
                 // Log Next.js 15 specific optimizations
                 if (process.env.NODE_ENV === "development") {
+                    // eslint-disable-next-line no-console
                     console.log("🚀 Next.js 15+ Production-Ready Optimizations Active:");
+                    // eslint-disable-next-line no-console
                     console.log("✅ React Compiler enabled (React 19)");
+                    // eslint-disable-next-line no-console
                     console.log("✅ Optimized package imports");
+                    // eslint-disable-next-line no-console
                     console.log("✅ Server Components external packages");
+                    // eslint-disable-next-line no-console
                     console.log("✅ Enhanced image optimization");
+                    // eslint-disable-next-line no-console
                     console.log("✅ SWC minification");
+                    // eslint-disable-next-line no-console
                     console.log("✅ Advanced webpack optimizations");
+                    // eslint-disable-next-line no-console
                     console.log("✅ Font preloading strategy");
+                    // eslint-disable-next-line no-console
                     console.log("⚠️ PPR disabled (experimental - not production ready)");
                 }
             }

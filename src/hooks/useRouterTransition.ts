@@ -15,23 +15,26 @@ export function useRouterTransition(): UseRouterTransitionReturn {
     const [isNavigating, setIsNavigating] = useState(false);
     const [isPending, startTransition] = useTransition();
 
-    const navigate = useCallback(async (href: string) => {
-        if (href === pathname) return;
+    const navigate = useCallback(
+        async (href: string) => {
+            if (href === pathname) return;
 
-        setIsNavigating(true);
+            setIsNavigating(true);
 
-        // Add a small delay to allow exit animations to play
-        await new Promise(resolve => setTimeout(resolve, 150));
+            // Add a small delay to allow exit animations to play
+            await new Promise((resolve) => setTimeout(resolve, 150));
 
-        startTransition(() => {
-            router.push(href);
-        });
+            startTransition(() => {
+                router.push(href);
+            });
 
-        // Reset navigating state after transition
-        setTimeout(() => {
-            setIsNavigating(false);
-        }, 300);
-    }, [router, pathname]);
+            // Reset navigating state after transition
+            setTimeout(() => {
+                setIsNavigating(false);
+            }, 300);
+        },
+        [router, pathname]
+    );
 
     return {
         navigate,

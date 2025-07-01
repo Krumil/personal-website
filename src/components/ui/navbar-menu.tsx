@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "motion/react";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
 import Image from "next/image";
-// TODO: Replace with your actual image imports
 import placeholder from "public/test.avif";
 
 const transition = {
@@ -79,15 +78,7 @@ export const Menu = ({
     );
 };
 
-export const ProductItem = ({
-    title,
-    description,
-    href,
-}: {
-    title: string;
-    description: string;
-    href: string;
-}) => {
+export const ProductItem = ({ title, description, href }: { title: string; description: string; href: string }) => {
     return (
         <a href={href} className="flex space-x-2">
             <Image src={placeholder} width={140} height={70} alt={title} className="shrink-0 rounded-md shadow-2xl" />

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Suspense } from "react";
-import { AnimatedGridPatternOptimized } from "@/components/ui/animated-grid-pattern-optimized";
+
 import { PerformanceMonitor } from "@/components/performance-monitor";
 import { PerformanceProvider } from "@/components/performance-provider";
+import TransitionWrapper from "@/components/TransitionWrapper";
+import { AnimatedGridPatternOptimized } from "@/components/ui/animated-grid-pattern-optimized";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import { AnimatePresence, motion } from "motion/react";
 
 const supreme = localFont({
     variable: "--font-supreme",
@@ -71,7 +72,7 @@ export default function RootLayout({
                     <Suspense
                         fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}
                     >
-                        {children}
+                        <TransitionWrapper>{children}</TransitionWrapper>
                     </Suspense>
                 </PerformanceProvider>
             </body>

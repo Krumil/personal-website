@@ -3,61 +3,61 @@
 
 /* View Transitions API Support */
 @view-transition {
-  navigation: auto;
+    navigation: auto;
 }
 
 /* Custom view transition animations */
 ::view-transition-old(root) {
-  animation: slide-out-left 0.3s ease-in-out;
+    animation: slide-out-left 0.3s ease-in-out;
 }
 
 ::view-transition-new(root) {
-  animation: slide-in-right 0.3s ease-in-out;
+    animation: slide-in-right 0.3s ease-in-out;
 }
 
 @keyframes slide-out-left {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(-100px);
-    opacity: 0;
-  }
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
 }
 
 @keyframes slide-in-right {
-  from {
-    transform: translateX(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Smooth page transitions */
 .page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .page-transition-exit {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.2s ease-in, transform 0.2s ease-in;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -136,10 +136,10 @@
     --card-foreground: oklch(0.1448 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.1448 0 0);
-    --primary: oklch(0.5555 0 0);
-    --primary-foreground: oklch(0.9851 0 0);
-    --secondary: oklch(0.9702 0 0);
-    --secondary-foreground: oklch(0.2046 0 0);
+    --primary: #fefffc;
+    --primary-foreground: #f2612e;
+    --secondary: #f2612e;
+    --secondary-foreground: #fefffc;
     --muted: oklch(0.9702 0 0);
     --muted-foreground: oklch(0.5486 0 0);
     --accent: oklch(0.9702 0 0);
@@ -192,10 +192,10 @@
     --card-foreground: oklch(0.9851 0 0);
     --popover: oklch(0.2686 0 0);
     --popover-foreground: oklch(0.9851 0 0);
-    --primary: oklch(0.5555 0 0);
-    --primary-foreground: oklch(0.9851 0 0);
-    --secondary: oklch(0.2686 0 0);
-    --secondary-foreground: oklch(0.9851 0 0);
+    --primary: #fefffc;
+    --primary-foreground: #f2612e;
+    --secondary: #f2612e;
+    --secondary-foreground: #fefffc;
     --muted: oklch(0.2686 0 0);
     --muted-foreground: oklch(0.709 0 0);
     --accent: oklch(0.3715 0 0);
