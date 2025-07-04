@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-
 import { Github, Mail, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

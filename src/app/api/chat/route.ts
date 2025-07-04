@@ -1,6 +1,8 @@
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 
+import { tools } from "@/ai/tools";
+
 export async function POST(req: Request) {
     const { messages } = await req.json();
 
@@ -43,9 +45,19 @@ Please answer questions about Simone's background, skills, projects, and interes
 
     const result = await streamText({
         model: openai("gpt-4o-mini"),
-        system: personalInfo,
+        system: personalInfo + `
+
+**Tool Usage Guidelines:**
+- Use the showProjects tool when users ask about projects, portfolio, or specific work examples
+- Use the showSkills tool when users ask about technical skills, expertise, or proficiency levels  
+- Use the getContact tool when users ask about contact information, availability, or how to reach out
+- Use the displayWeather tool when users ask about weather in any location
+- Use the getStockPrice tool when users ask about stock prices or market information
+
+Always provide helpful context around tool results and engage meaningfully with the user's questions.`,
         messages,
         maxTokens: 1000,
+        tools,
     });
 
     return result.toDataStreamResponse();
