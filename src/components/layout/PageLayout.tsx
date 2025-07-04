@@ -4,9 +4,9 @@ import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { TransitionLink } from "./TransitionLink";
+import { TransitionLink } from "../navigation/TransitionLink";
 
-interface MinimalistPageLayoutProps {
+interface PageLayoutProps {
     title: string;
     subtitle: string;
     description: string;
@@ -14,13 +14,13 @@ interface MinimalistPageLayoutProps {
     children: React.ReactNode;
 }
 
-export default function MinimalistPageLayout({
+export default function PageLayout({
     title,
     subtitle,
     description,
     tags,
     children,
-}: MinimalistPageLayoutProps) {
+}: PageLayoutProps) {
     return (
         <div className="min-h-screen bg-black text-white">
             {/* Navigation */}

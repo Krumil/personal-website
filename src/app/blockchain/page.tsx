@@ -1,8 +1,8 @@
 "use client";
 
-import MinimalistPageLayout from "@/components/MinimalistPageLayout";
-import MinimalistProjectCard from "@/components/MinimalistProjectCard";
-import TransitionWrapper from "@/components/TransitionWrapper";
+import PageLayout from "@/components/layout/PageLayout";
+import ProjectCard from "@/components/common/ProjectCard";
+import TransitionWrapper from "@/components/layout/TransitionWrapper";
 
 export default function BlockchainProjects() {
   const blockchainProjects = [
@@ -54,7 +54,7 @@ export default function BlockchainProjects() {
 
   return (
     <TransitionWrapper>
-      <MinimalistPageLayout
+      <PageLayout
         title="BLOCKCHAIN"
         subtitle="WEB3 — DECENTRALIZED APPLICATIONS"
         description="Building user-friendly Web3 applications that make blockchain technology accessible. From DeFi dashboards to NFT platforms, I create interfaces that don't require a PhD in crypto to use."
@@ -72,7 +72,7 @@ export default function BlockchainProjects() {
 
             <div className="space-y-0">
               {blockchainProjects.map((project, index) => (
-                <MinimalistProjectCard
+                <ProjectCard
                   key={index}
                   number={project.number}
                   title={project.title}
@@ -109,7 +109,7 @@ export default function BlockchainProjects() {
             </div>
           </div>
         </section>
-      </MinimalistPageLayout>
+      </PageLayout>
     </TransitionWrapper>
   );
 }

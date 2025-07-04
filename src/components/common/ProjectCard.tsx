@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-interface MinimalistProjectCardProps {
+interface ProjectCardProps {
     number: string;
     title: string;
     description: string;
@@ -12,14 +12,14 @@ interface MinimalistProjectCardProps {
     impact?: string;
 }
 
-export default function MinimalistProjectCard({
+export default function ProjectCard({
     number,
     title,
     description,
     tech,
     year,
     impact,
-}: MinimalistProjectCardProps) {
+}: ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (

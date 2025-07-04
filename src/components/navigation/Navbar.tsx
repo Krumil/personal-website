@@ -1,6 +1,4 @@
 "use client";
-/* eslint-disable import/order */
-
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -9,8 +7,6 @@ import { Github, Mail, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-import { ThemeToggle } from "./theme-toggle";
 
 const navigation = [
     { name: "Home", href: "/" },
@@ -26,7 +22,7 @@ const socialLinks = [
     { name: "Email", href: "mailto:hello@example.com", icon: Mail },
 ];
 
-export default function MinimalistNavbar() {
+export default function Navbar() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [scrolled, setScrolled] = React.useState(false);
 
@@ -80,8 +76,6 @@ export default function MinimalistNavbar() {
 
                     <div className="mx-4 h-6 w-px bg-border" />
 
-                    <ThemeToggle />
-
                     <Button
                         asChild
                         size="sm"
@@ -93,7 +87,6 @@ export default function MinimalistNavbar() {
 
                 {/* Mobile Navigation */}
                 <div className="flex items-center space-x-2 md:hidden">
-                    <ThemeToggle />
                     <Sheet open={isOpen} onOpenChange={setIsOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon" className="relative">
@@ -130,7 +123,7 @@ export default function MinimalistNavbar() {
                                             key={item.name}
                                             href={item.href}
                                             className={`block px-4 py-3 text-lg font-medium transition-all duration-300 hover:text-primary hover:bg-accent/50 rounded-lg transform ${
-                                                isOpen ? 'translate-x-0 opacity-100' : 'translate-x-5 opacity-0'
+                                                isOpen ? "translate-x-0 opacity-100" : "translate-x-5 opacity-0"
                                             }`}
                                             onClick={() => setIsOpen(false)}
                                             style={{
@@ -182,7 +175,6 @@ export default function MinimalistNavbar() {
                     </Sheet>
                 </div>
             </div>
-
         </nav>
     );
 }

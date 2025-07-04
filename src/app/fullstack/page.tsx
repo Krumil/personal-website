@@ -2,9 +2,9 @@
 
 import { Globe, Server } from "lucide-react";
 
-import MinimalistPageLayout from "@/components/MinimalistPageLayout";
-import MinimalistProjectCard from "@/components/MinimalistProjectCard";
-import TransitionWrapper from "@/components/TransitionWrapper";
+import PageLayout from "@/components/layout/PageLayout";
+import ProjectCard from "@/components/common/ProjectCard";
+import TransitionWrapper from "@/components/layout/TransitionWrapper";
 
 export default function FullStackProjects() {
   const fullStackProjects = [
@@ -78,7 +78,7 @@ export default function FullStackProjects() {
 
   return (
     <TransitionWrapper>
-      <MinimalistPageLayout
+      <PageLayout
         title="FULL STACK"
         subtitle="END-TO-END — WEB DEVELOPMENT"
         description="Building complete web experiences from frontend to backend. I create applications where everything works together seamlessly - fast frontends, solid backends, and all the complex bits in between."
@@ -96,7 +96,7 @@ export default function FullStackProjects() {
 
             <div className="space-y-0">
               {fullStackProjects.map((project, index) => (
-                <MinimalistProjectCard
+                <ProjectCard
                   key={index}
                   number={project.number}
                   title={project.title}
@@ -161,7 +161,7 @@ export default function FullStackProjects() {
             </div>
           </div>
         </section>
-      </MinimalistPageLayout>
+      </PageLayout>
     </TransitionWrapper>
   );
 }

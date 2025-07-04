@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Suspense } from "react";
+import { TwentyFirstToolbar } from "@21st-extension/toolbar-next";
+import { ReactPlugin } from "@21st-extension/react";
 
-import { PerformanceMonitor } from "@/components/performance-monitor";
-import { PerformanceProvider } from "@/components/performance-provider";
-import TransitionWrapper from "@/components/TransitionWrapper";
-import MinimalistNavbar from "@/components/MinimalistNavbar";
+import { PerformanceMonitor } from "@/components/performance/performance-monitor";
+import { PerformanceProvider } from "@/components/performance/performance-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import TransitionWrapper from "@/components/layout/TransitionWrapper";
+import Navbar from "@/components/navigation/Navbar";
 import "./globals.css";
 
 const supreme = localFont({
@@ -45,19 +48,20 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en" suppressHydrationWarning>
             <body className={`${supreme.variable} ${technor.variable} antialiased`}>
-                <PerformanceProvider>
-                    {/* Global Animated Grid Background - Optimized */}
-
-                    <MinimalistNavbar />
-                    <PerformanceMonitor />
-                    <Suspense
-                        fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}
-                    >
-                        <TransitionWrapper>{children}</TransitionWrapper>
-                    </Suspense>
-                </PerformanceProvider>
+                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+                    <PerformanceProvider>
+                        <Navbar />
+                        <PerformanceMonitor />
+                        <TwentyFirstToolbar config={{ plugins: [ReactPlugin] }} />
+                        <Suspense
+                            fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}
+                        >
+                            <TransitionWrapper>{children}</TransitionWrapper>
+                        </Suspense>
+                    </PerformanceProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

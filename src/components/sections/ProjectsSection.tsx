@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-import { TransitionLink } from "./TransitionLink";
+import { TransitionLink } from "../navigation/TransitionLink";
 
 const projects = [
     {

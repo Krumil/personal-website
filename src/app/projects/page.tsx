@@ -7,7 +7,7 @@ import { Github, ExternalLink, Code, Zap, Shield, Blocks } from "lucide-react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import ProjectDetail from "@/components/ProjectDetail";
+import ProjectDetail from "@/components/common/ProjectDetail";
 
 type ProjectCategory = "all" | "ai" | "web3" | "fullstack" | "tools";
 

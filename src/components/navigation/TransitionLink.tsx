@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { ReactNode, useCallback, useState } from "react";
-import { motion } from "motion/react";
+import { motion, HTMLMotionProps } from "motion/react";
 
-interface TransitionLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface TransitionLinkProps extends Omit<HTMLMotionProps<"a">, "onClick"> {
     href: string;
     children: ReactNode;
     className?: string;

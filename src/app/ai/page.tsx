@@ -1,8 +1,8 @@
 "use client";
 
-import MinimalistPageLayout from "@/components/MinimalistPageLayout";
-import MinimalistProjectCard from "@/components/MinimalistProjectCard";
-import TransitionWrapper from "@/components/TransitionWrapper";
+import PageLayout from "@/components/layout/PageLayout";
+import ProjectCard from "@/components/common/ProjectCard";
+import TransitionWrapper from "@/components/layout/TransitionWrapper";
 
 export default function AIProjects() {
   const aiProjects = [
@@ -62,7 +62,7 @@ export default function AIProjects() {
 
   return (
     <TransitionWrapper>
-      <MinimalistPageLayout
+      <PageLayout
         title="AI PROJECTS"
         subtitle="ARTIFICIAL INTELLIGENCE — MACHINE LEARNING"
         description="Building intelligent systems that understand context, make decisions, and deliver measurable results. From autonomous agents to fact-checking tools, I create AI that actually works in the real world."
@@ -80,7 +80,7 @@ export default function AIProjects() {
 
             <div className="space-y-0">
               {aiProjects.map((project, index) => (
-                <MinimalistProjectCard
+                <ProjectCard
                   key={index}
                   number={project.number}
                   title={project.title}
@@ -117,7 +117,7 @@ export default function AIProjects() {
             </div>
           </div>
         </section>
-      </MinimalistPageLayout>
+      </PageLayout>
     </TransitionWrapper>
   );
 }

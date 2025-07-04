@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { X, Github, ExternalLink, Calendar, Users, Award } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -34,6 +35,19 @@ interface ProjectDetailProps {
 }
 
 export default function ProjectDetail({ project, onClose }: ProjectDetailProps) {
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const update = () => setScrollY(window.scrollY);
+        update();
+        window.addEventListener("scroll", update);
+        return () => window.removeEventListener("scroll", update);
+    }, []);
+
+    const offsetPx = typeof window !== "undefined" ? window.innerHeight * 0.05 : 0;
+
+    const computedTop = scrollY + offsetPx;
+
     return (
         <>
             {/* Overlay */}
@@ -48,10 +62,10 @@ export default function ProjectDetail({ project, onClose }: ProjectDetailProps) 
 
             {/* Expanded Card */}
             <motion.div
-                className="fixed z-50 p-4 md:p-8"
+                className="fixed z-50 p-4 md:p-8 max-h-[90vh]"
                 style={{
                     left: "50%",
-                    top: "5%",
+                    top: `${computedTop}px`,
                     transform: "translate(-50%, 0%)",
                 }}
                 onClick={onClose}
