@@ -8,11 +8,11 @@ import { TransitionLink } from "./TransitionLink";
 const projects = [
     {
         number: "01",
-        title: "Blockchain Agent",
-        description: "Autonomous AI that speaks to smart contracts in plain English",
-        impact: "80% complexity reduction",
+        title: "MetaFlags",
+        description: "Decentralized feature flag management on-chain",
+        impact: "100% decentralized",
         year: "2024",
-        href: "/ai",
+        href: "/projects",
     },
     {
         number: "02",
@@ -44,40 +44,51 @@ export default function ProjectsSection() {
     const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
     return (
-        <section id="work" className="py-20 px-8 bg-white text-black">
+        <section id="work" className="py-20 px-8 bg-muted/80 text-foreground">
             <div className="max-w-6xl mx-auto">
-                <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-bold mb-4">SELECTED WORK</h2>
-                    <p className="text-xl text-black/60 max-w-2xl">
-                        Real-world applications combining AI intelligence with blockchain technology
-                    </p>
+                <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between">
+                    <div>
+                        <h2 className="text-4xl md:text-6xl font-bold mb-4">SELECTED WORK</h2>
+                        <p className="text-xl text-muted-foreground max-w-2xl">
+                            Real-world applications combining AI intelligence with Web3 technology
+                        </p>
+                    </div>
+                    <div className="mt-6 md:mt-0">
+                        <TransitionLink 
+                            href="/projects" 
+                            className="inline-flex items-center px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors font-medium"
+                        >
+                            View All Projects
+                            <ArrowUpRight className="w-4 h-4 ml-2" />
+                        </TransitionLink>
+                    </div>
                 </div>
 
                 <div className="space-y-0">
                     {projects.map((project, index) => (
                         <div
                             key={index}
-                            className="group border-t border-black/10 last:border-b"
+                            className="group border-t border-border/20 last:border-b"
                             onMouseEnter={() => setHoveredProject(index)}
                             onMouseLeave={() => setHoveredProject(null)}
                         >
                             <TransitionLink href={project.href} className="block py-8 cursor-pointer">
                                 <div className="grid grid-cols-12 gap-8 items-center">
                                     <div className="col-span-1">
-                                        <div className="text-sm text-black/40 font-mono">{project.number}</div>
+                                        <div className="text-sm text-muted-foreground font-mono">{project.number}</div>
                                     </div>
                                     <div className="col-span-6 md:col-span-5">
-                                        <h3 className="text-2xl md:text-3xl font-bold group-hover:text-black/60 transition-colors">
+                                        <h3 className="text-2xl md:text-3xl font-bold group-hover:text-secondary transition-colors">
                                             {project.title}
                                         </h3>
-                                        <p className="text-black/60 mt-2">{project.description}</p>
+                                        <p className="text-muted-foreground mt-2">{project.description}</p>
                                     </div>
-                                    <div className="col-span-3 md:col-span-2">
-                                        <div className="text-sm text-black/40 mb-1">IMPACT</div>
+                                    <div className="hidden md:block col-span-3 md:col-span-2">
+                                        <div className="text-sm text-muted-foreground mb-1">IMPACT</div>
                                         <div className="font-bold">{project.impact}</div>
                                     </div>
                                     <div className="col-span-1">
-                                        <div className="text-sm text-black/40 font-mono">{project.year}</div>
+                                        <div className="text-sm text-muted-foreground font-mono">{project.year}</div>
                                     </div>
                                     <div className="col-span-1">
                                         <ArrowUpRight

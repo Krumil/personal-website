@@ -5,8 +5,7 @@ import { Suspense } from "react";
 import { PerformanceMonitor } from "@/components/performance-monitor";
 import { PerformanceProvider } from "@/components/performance-provider";
 import TransitionWrapper from "@/components/TransitionWrapper";
-import { AnimatedGridPatternOptimized } from "@/components/ui/animated-grid-pattern-optimized";
-import { cn } from "@/lib/utils";
+import MinimalistNavbar from "@/components/MinimalistNavbar";
 import "./globals.css";
 
 const supreme = localFont({
@@ -47,27 +46,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="dark">
-            <head>
-                {/* Preload critical fonts for better performance */}
-                <link rel="preload" href="/fonts/Supreme-Regular.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/Technor-Regular.woff2" as="font" type="font/woff2" crossOrigin="" />
-                {/* DNS prefetch for better performance */}
-                <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-                <link rel="preconnect" href="//fonts.googleapis.com" crossOrigin="" />
-            </head>
             <body className={`${supreme.variable} ${technor.variable} antialiased`}>
                 <PerformanceProvider>
                     {/* Global Animated Grid Background - Optimized */}
-                    <AnimatedGridPatternOptimized
-                        numSquares={40}
-                        maxOpacity={0.15}
-                        duration={3}
-                        className={cn(
-                            "fixed inset-0 -z-10 skew-y-12",
-                            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
-                        )}
-                    />
 
+                    <MinimalistNavbar />
                     <PerformanceMonitor />
                     <Suspense
                         fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}

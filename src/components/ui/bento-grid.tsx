@@ -1,7 +1,7 @@
-import { ReactNode, ElementType } from "react";
+import { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,8 @@ const BentoCard = ({
     backgroundImageUrl = "/test.avif",
     backgroundImageAlt,
     cardUrl = "https://www.google.com",
+    projectId,
+    onClick,
 }: {
     name: string;
     className: string;
@@ -30,39 +32,79 @@ const BentoCard = ({
     backgroundImageUrl?: string;
     backgroundImageAlt?: string;
     cardUrl?: string;
+    projectId?: string;
+    onClick?: () => void;
 }) => {
-    // Dynamically choose root component (Link for clickable card)
-    const RootComponent: ElementType = cardUrl ? Link : "div";
-    const rootProps = cardUrl ? { href: cardUrl, target: "_blank" } : {};
+    const handleClick = (e: React.MouseEvent) => {
+        if (onClick) {
+            e.preventDefault();
+            e.stopPropagation();
+            onClick();
+            return;
+        }
+        // Default behavior for external links
+        if (cardUrl) {
+            window.open(cardUrl, "_blank");
+        }
+    };
+
     return (
-        <RootComponent
+        <motion.div
+            layoutId={projectId ? `card-container-${projectId}` : undefined}
             key={name}
-            {...rootProps}
+            onClick={handleClick}
             className={cn(
-                "group relative col-span-3 flex flex-col justify-end overflow-hidden rounded-xl cursor-pointer",
+                "group relative flex flex-col justify-end overflow-hidden rounded-xl cursor-pointer h-full w-full",
                 "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
                 "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
                 className
             )}
+            layout
+            transition={{
+                type: "spring",
+                damping: 30,
+                stiffness: 300,
+                mass: 0.8
+            }}
         >
             {/* Background Image */}
             {backgroundImageUrl && (
-                <Image
-                    src={backgroundImageUrl}
-                    alt={backgroundImageAlt || name}
-                    fill
-                    className="absolute inset-0 -z-10 object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                />
+                <motion.div
+                    layoutId={projectId ? `card-image-container-${projectId}` : undefined}
+                    className="absolute inset-0 -z-10"
+                    transition={{
+                        type: "spring",
+                        damping: 30,
+                        stiffness: 300,
+                        mass: 0.8
+                    }}
+                >
+                    <Image
+                        src={backgroundImageUrl}
+                        alt={backgroundImageAlt || name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                </motion.div>
             )}
 
             {/* Additional background elements if provided */}
             <div className="pointer-events-none absolute inset-0 -z-20">{background}</div>
 
-            <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
+            <motion.div
+                layoutId={projectId ? `title-container-${projectId}` : undefined}
+                className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10"
+                transition={{
+                    type: "spring",
+                    damping: 30,
+                    stiffness: 300,
+                    mass: 0.8
+                }}
+            >
                 <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">{name}</h3>
                 <p className="max-w-lg text-neutral-400">{description}</p>
-            </div>
+            </motion.div>
 
             <div
                 className={cn(
@@ -85,7 +127,7 @@ const BentoCard = ({
             </div>
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/40 to-transparent z-[1]" />
             <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
-        </RootComponent>
+        </motion.div>
     );
 };
 

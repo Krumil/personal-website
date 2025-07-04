@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { HyperText } from "@/components/ui/hyper-text";
@@ -36,7 +36,7 @@ export default function HeroSection() {
     return (
         <section className="pt-16 md:pt-32 pb-20 px-2 md:px-8 relative overflow-hidden h-screen flex-col flex justify-center items-center">
             <div className="max-w-7xl w-full">
-                <div className="relative border border-border/20 rounded-3xl p-8 overflow-hidden bg-background/90 w-full flex flex-col items-start h-[calc(100vh-10rem)]">
+                <div className="relative border border-border/20 rounded-3xl p-8 overflow-hidden bg-card/90 backdrop-blur-sm w-full flex flex-col items-start h-[calc(100vh-10rem)]">
                     <div className="mb-48 md:mb-32">
                         <Spotlight>
                             <HyperText
@@ -48,7 +48,7 @@ export default function HeroSection() {
                             <HyperText
                                 text="THOUGHTFUL"
                                 duration={500}
-                                className="text-4xl md:text-6xl lg:text-7xl font-bold leading-none text-white/40"
+                                className="text-4xl md:text-6xl lg:text-7xl font-bold leading-none text-secondary/60"
                                 animateOnLoad={animateThoughtful}
                             />
                             <HyperText
@@ -64,7 +64,7 @@ export default function HeroSection() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
-                                className="text-base md:text-xl text-foreground/80 leading-relaxed mb-8 font-light"
+                                className="text-base md:text-xl text-muted-foreground leading-relaxed mb-8 font-light"
                             >
                                 I build AI systems that feel human and blockchain applications that make sense. My work
                                 sits at the intersection of technology and empathy - creating tools that understand
@@ -79,7 +79,7 @@ export default function HeroSection() {
                             >
                                 <Button
                                     size="lg"
-                                    className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                                    className="bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
@@ -91,7 +91,7 @@ export default function HeroSection() {
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    className="border-border text-foreground hover:bg-foreground hover:text-background bg-transparent transition-all"
+                                    className="border-border text-foreground hover:bg-accent hover:text-accent-foreground transition-all"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });

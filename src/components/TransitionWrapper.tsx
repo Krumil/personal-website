@@ -31,28 +31,28 @@ const getRouteTransition = (pathname: string): Variants => {
         };
     }
 
-    if (pathname.includes("/ai") || pathname.includes("/blockchain") || pathname.includes("/fullstack")) {
-        return {
-            initial: { opacity: 0, x: 60 },
-            animate: {
-                opacity: 1,
-                x: 0,
-                transition: {
-                    type: "spring",
-                    bounce: 0.2,
-                    duration: 0.45,
-                },
-            },
-            exit: {
-                opacity: 0,
-                x: -60,
-                transition: {
-                    duration: 0.3,
-                    ease: "easeOut",
-                },
-            },
-        };
-    }
+    // if (pathname.includes("/ai") || pathname.includes("/blockchain") || pathname.includes("/fullstack")) {
+    //     return {
+    //         initial: { opacity: 0, x: 60 },
+    //         animate: {
+    //             opacity: 1,
+    //             x: 0,
+    //             transition: {
+    //                 type: "spring",
+    //                 bounce: 0.2,
+    //                 duration: 0.45,
+    //             },
+    //         },
+    //         exit: {
+    //             opacity: 0,
+    //             x: -60,
+    //             transition: {
+    //                 duration: 0.3,
+    //                 ease: "easeOut",
+    //             },
+    //         },
+    //     };
+    // }
 
     return {
         initial: { opacity: 0, y: 15 },

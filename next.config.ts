@@ -9,49 +9,21 @@ const nextConfig: NextConfig = {
         // Enable React Compiler (React 19 feature)
         reactCompiler: true,
         // Optimize package imports
-        optimizePackageImports: ["framer-motion", "motion"],
+        optimizePackageImports: ["motion"],
     },
 
-    // Server external packages (moved from experimental)
-    serverExternalPackages: ["three"],
 
     // Turbopack configuration
     turbopack: {
-        // Configure webpack loaders for Turbopack
-        rules: {
-            // SVG support with SVGR
-            "*.svg": {
-                loaders: ["@svgr/webpack"],
-                as: "*.js",
-            },
-            // GLSL shader support for Three.js
-            "*.glsl": {
-                loaders: ["raw-loader"],
-                as: "*.js",
-            },
-            // Fragment shaders
-            "*.frag": {
-                loaders: ["raw-loader"],
-                as: "*.js",
-            },
-            // Vertex shaders
-            "*.vert": {
-                loaders: ["raw-loader"],
-                as: "*.js",
-            },
-        },
         // Resolve aliases for better imports
         resolveAlias: {
-            // Three.js optimizations
-            "three/examples/jsm": "three/examples/jsm",
-            // Common aliases
             "@": "./src",
             "@/components": "./src/components",
             "@/lib": "./src/lib",
             "@/utils": "./src/utils",
         },
         // Custom extensions resolution
-        resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".glsl", ".frag", ".vert"],
+        resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
 
     // Image optimization
@@ -72,15 +44,7 @@ const nextConfig: NextConfig = {
     },
 
     // Bundle optimization
-    webpack: (config, { dev, isServer }) => {
-        // Optimize Three.js bundle
-        if (!isServer) {
-            config.resolve.alias = {
-                ...config.resolve.alias,
-                "three/examples/jsm": "three/examples/jsm",
-            };
-        }
-
+    webpack: (config, { dev }) => {
         // Tree shake unused code more aggressively
         if (!dev) {
             config.optimization.usedExports = true;

@@ -1,9 +1,12 @@
 "use client";
+/* eslint-disable import/order */
 
+import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+
 import { Github, Mail, Menu, X } from "lucide-react";
-import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -126,11 +129,12 @@ export default function MinimalistNavbar() {
                                         <Link
                                             key={item.name}
                                             href={item.href}
-                                            className="block px-4 py-3 text-lg font-medium transition-all duration-300 hover:text-primary hover:bg-accent/50 rounded-lg"
+                                            className={`block px-4 py-3 text-lg font-medium transition-all duration-300 hover:text-primary hover:bg-accent/50 rounded-lg transform ${
+                                                isOpen ? 'translate-x-0 opacity-100' : 'translate-x-5 opacity-0'
+                                            }`}
                                             onClick={() => setIsOpen(false)}
                                             style={{
-                                                animationDelay: `${index * 100}ms`,
-                                                animation: isOpen ? "slideInRight 0.3s ease-out forwards" : "none",
+                                                transitionDelay: `${index * 100}ms`,
                                             }}
                                         >
                                             {item.name}
@@ -179,18 +183,6 @@ export default function MinimalistNavbar() {
                 </div>
             </div>
 
-            <style jsx>{`
-                @keyframes slideInRight {
-                    from {
-                        opacity: 0;
-                        transform: translateX(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                }
-            `}</style>
         </nav>
     );
 }

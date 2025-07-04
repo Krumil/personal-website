@@ -25,7 +25,7 @@ export function AnimatedGridPatternOptimized({
     strokeDasharray = 0,
     numSquares = 50,
     className,
-    maxOpacity = 0.5,
+    maxOpacity = 0.8,
     duration = 4,
     ...props
 }: AnimatedGridPatternProps) {
@@ -183,6 +183,7 @@ export function AnimatedGridPatternOptimized({
                     x={posX * width + 1}
                     y={posY * height + 1}
                     fill="currentColor"
+                    className="text-border/40"
                     strokeWidth="0"
                     style={{
                         // Use transform3d for hardware acceleration
@@ -199,7 +200,7 @@ export function AnimatedGridPatternOptimized({
             ref={containerRef}
             aria-hidden="true"
             className={cn(
-                "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+                "pointer-events-none absolute inset-0 h-full w-full fill-border/30 stroke-border/30",
                 className
             )}
             style={{

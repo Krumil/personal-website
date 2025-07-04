@@ -1,6 +1,7 @@
 "use client";
 
-import { BrainCircuit, Code2, Hexagon } from "lucide-react";
+import { Code2, Hexagon } from "lucide-react";
+import Image from "next/image";
 
 import CardSwap, { Card } from "@/components/ui/card-swap";
 
@@ -17,17 +18,18 @@ export default function HeroCards() {
                         <span className="w-2 h-2 bg-green-500 rounded-full" />
                     </div>
                     <span className="text-xs text-foreground/70 absolute top-0 left-1/2 -translate-x-1/2">
-                        multimodal.ai
+                        Metaflags.app
                     </span>
                 </div>
 
                 {/* Body */}
-                <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-center">
-                    <BrainCircuit className="w-10 h-10 text-primary" />
-                    <h3 className="text-xl font-semibold">Multimodal&nbsp;AI</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                        Build agents that can see, think &amp; chat – all with one toolkit.
-                    </p>
+                <div className="relative flex-1 p-6">
+                    <Image
+                        src="/images/projects/metaflags.png"
+                        alt="Metaflags logo"
+                        fill
+                        className="object-contain w-full h-full"
+                    />
                 </div>
             </Card>
 

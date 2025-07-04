@@ -132,7 +132,7 @@ export const PerformanceMonitor = () => {
             // eslint-disable-next-line no-console
             console.log("Performance optimizations active:");
             // eslint-disable-next-line no-console
-            console.log("- Three.js lazy loading: ✓");
+            console.log("- Motion animations optimized: ✓");
             // eslint-disable-next-line no-console
             console.log("- Optimized grid pattern: ✓");
             // eslint-disable-next-line no-console

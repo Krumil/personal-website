@@ -6,12 +6,13 @@ import { remark } from 'remark';
 import html from 'remark-html';
 
 interface BlogPostProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: BlogPostProps) {
+  const { slug } = await params;
   const postsDirectory = path.join(process.cwd(), 'content', 'blog');
-  const filePath = path.join(postsDirectory, `${params.slug}.md`);
+  const filePath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
 
