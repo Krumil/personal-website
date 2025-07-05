@@ -127,12 +127,12 @@
     --color-shadow-color: var(--shadow-color);
     --color-destructive-foreground: var(--destructive-foreground);
     --animate-line-shadow: line-shadow 15s linear infinite;
-  @keyframes line-shadow {
-  0% {
-    background-position: 0 0;
+    @keyframes line-shadow {
+        0% {
+            background-position: 0 0;
         }
-  100% {
-    background-position: 100% -100%;
+        100% {
+            background-position: 100% -100%;
         }
     }
 }
@@ -257,7 +257,8 @@
     body {
         @apply bg-background text-foreground;
         letter-spacing: var(--tracking-normal);
-        font-family: var(--font-sans);
+        font-family: var(--font-mono);
+        font-size: 1.125rem; /* 18px */
     }
 
     h1,

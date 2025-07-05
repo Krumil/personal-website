@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Suspense } from "react";
-import { TwentyFirstToolbar } from "@21st-extension/toolbar-next";
-import { ReactPlugin } from "@21st-extension/react";
 
 import { PerformanceMonitor } from "@/components/performance/performance-monitor";
 import { PerformanceProvider } from "@/components/performance/performance-provider";
@@ -54,7 +52,6 @@ export default function RootLayout({
                     <PerformanceProvider>
                         <Navbar />
                         <PerformanceMonitor />
-                        <TwentyFirstToolbar config={{ plugins: [ReactPlugin] }} />
                         <Suspense
                             fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}
                         >
