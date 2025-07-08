@@ -64,7 +64,7 @@ const BentoCard = ({
                 type: "spring",
                 damping: 30,
                 stiffness: 300,
-                mass: 0.8
+                mass: 0.8,
             }}
         >
             {/* Background Image */}
@@ -76,7 +76,7 @@ const BentoCard = ({
                         type: "spring",
                         damping: 30,
                         stiffness: 300,
-                        mass: 0.8
+                        mass: 0.8,
                     }}
                 >
                     <Image
@@ -99,7 +99,7 @@ const BentoCard = ({
                     type: "spring",
                     damping: 30,
                     stiffness: 300,
-                    mass: 0.8
+                    mass: 0.8,
                 }}
             >
                 <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">{name}</h3>

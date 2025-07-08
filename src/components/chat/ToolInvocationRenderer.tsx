@@ -63,6 +63,7 @@ type ContactResult = {
     availability?: AvailabilityInfo;
 };
 
+
 interface ToolInvocationRendererProps {
     toolInvocations: Array<{
         toolName: string;

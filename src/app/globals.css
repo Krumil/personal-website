@@ -195,7 +195,7 @@
 }
 
 .dark {
-    --background: oklch(0.1448 0 0);
+    --background: oklch(0.1609 0.0115 80.98);
     --foreground: oklch(0.9851 0 0);
     --card: oklch(0.2134 0 0);
     --card-foreground: oklch(0.9851 0 0);
@@ -282,6 +282,34 @@ h4,
 h5,
 h6 {
     font-family: var(--font-technor), monospace !important;
+}
+
+/* Custom scrollbar styling */
+.chat-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--muted-foreground) / 0.2) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+    background: oklch(var(--muted-foreground) / 0.15);
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--muted-foreground) / 0.3);
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:active {
+    background: oklch(var(--muted-foreground) / 0.4);
 }
 
 @layer utilities {

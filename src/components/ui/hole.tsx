@@ -72,6 +72,7 @@ type HoleBackgroundProps = React.ComponentProps<"div"> & {
     numberOfLines?: number;
     numberOfDiscs?: number;
     particleRGBColor?: [number, number, number];
+    animationIntensity?: number; // New prop to control animation speed (0.1 = slow, 1 = normal)
 };
 
 function HoleBackground({
@@ -79,6 +80,7 @@ function HoleBackground({
     numberOfLines = 50,
     numberOfDiscs = 50,
     particleRGBColor = [255, 255, 255],
+    animationIntensity = 1,
     className,
     children,
     ...props
@@ -357,10 +359,10 @@ function HoleBackground({
 
     const moveDiscs = React.useCallback(() => {
         stateRef.current.discs.forEach((disc: Disc) => {
-            disc.p = (disc.p + 0.001) % 1;
+            disc.p = (disc.p + 0.001 * animationIntensity) % 1;
             tweenDisc(disc);
         });
-    }, [tweenDisc]);
+    }, [tweenDisc, animationIntensity]);
 
     const moveParticles = React.useCallback(() => {
         stateRef.current.particles.forEach((particle: Particle, idx: number) => {
@@ -420,7 +422,7 @@ function HoleBackground({
             data-slot="hole-background"
             className={cn(
                 "relative size-full overflow-hidden",
-                'before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:block before:size-[140%] dark:before:[background:radial-gradient(ellipse_at_50%_55%,transparent_10%,black_50%)] before:[background:radial-gradient(ellipse_at_50%_55%,transparent_10%,white_50%)] before:[transform:translate3d(-50%,-50%,0)]',
+                'before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:block before:size-[140%] dark:before:[background:radial-gradient(ellipse_at_50%_55%,transparent_10%,oklch(0.1609_0.0115_80.98)_50%)] before:[background:radial-gradient(ellipse_at_50%_55%,transparent_10%,white_50%)] before:[transform:translate3d(-50%,-50%,0)]',
                 'after:content-[""] after:absolute after:z-[5] after:top-1/2 after:left-1/2 after:block after:size-full after:[background:radial-gradient(ellipse_at_50%_75%,#f2612e_20%,transparent_75%)] after:[transform:translate3d(-50%,-50%,0)] after:mix-blend-overlay',
                 className
             )}
@@ -428,6 +430,8 @@ function HoleBackground({
         >
             {children}
             <canvas ref={canvasRef} className="absolute block dark:opacity-20 opacity-10" />
+            {/* Color smoothing overlay */}
+            <div className="absolute inset-0 z-[6] pointer-events-none dark:[background:linear-gradient(135deg,transparent_0%,rgba(16,13,8,0.4)_25%,rgba(16,13,8,0.7)_50%,rgba(16,13,8,0.4)_75%,transparent_100%)] [background:linear-gradient(135deg,transparent_0%,rgba(255,255,255,0.05)_25%,rgba(255,255,255,0.1)_50%,rgba(255,255,255,0.05)_75%,transparent_100%)] mix-blend-soft-light" />
             <div className="absolute top-0 left-0 z-[7] size-full dark:[background:repeating-linear-gradient(transparent,transparent_1px,white_1px,white_2px)] mix-blend-overlay opacity-50" />
         </div>
     );
