@@ -1,256 +1,16 @@
 import React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { ArrowUp, Paperclip, Square, X, StopCircle, Mic, Globe, BrainCog } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "motion/react";
+import { ArrowUp, Square, X, Mic, Globe, BrainCog, MessageSquare, Volume2, StopCircle } from "lucide-react";
+import { RealtimeAgent, RealtimeSession } from "@openai/agents/realtime";
 
-// Utility function for className merging
-const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
+import { processImageFile, getImageFilesFromItems } from "@/utils/fileUtils";
+import { cn } from "@/lib/utils";
 
-// Embedded CSS for minimal custom styles
-const styles = `
-  *:focus-visible {
-    outline-offset: 0 !important;
-    --ring-offset: 0 !important;
-  }
-  textarea::-webkit-scrollbar {
-    width: 6px;
-  }
-  textarea::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  textarea::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--border));
-    border-radius: 3px;
-  }
-  textarea::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--accent));
-  }
-`;
-
-// Inject styles into document (client-side only)
-if (typeof document !== "undefined") {
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = styles;
-    document.head.appendChild(styleSheet);
-}
-
-// Textarea Component
-interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    className?: string;
-}
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ className, ...props }, ref) => (
-    <textarea
-        className={cn(
-            "flex w-full rounded-md border-none bg-transparent px-3 py-2.5 text-base text-foreground placeholder:text-foreground/30 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] resize-none scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent hover:scrollbar-thumb-accent font-mono",
-            className
-        )}
-        ref={ref}
-        rows={1}
-        {...props}
-    />
-));
-Textarea.displayName = "Textarea";
-
-// Tooltip Components
-const TooltipProvider = TooltipPrimitive.Provider;
-const Tooltip = TooltipPrimitive.Root;
-const TooltipTrigger = TooltipPrimitive.Trigger;
-const TooltipContent = React.forwardRef<
-    React.ElementRef<typeof TooltipPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-    <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        className={cn(
-            "z-50 overflow-hidden rounded-md border border-border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-            className
-        )}
-        {...props}
-    />
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
-
-// Dialog Components
-const Dialog = DialogPrimitive.Root;
-const DialogPortal = DialogPrimitive.Portal;
-const DialogOverlay = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Overlay>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-    <DialogPrimitive.Overlay
-        ref={ref}
-        className={cn(
-            "fixed inset-0 z-50 bg-background/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-            className
-        )}
-        {...props}
-    />
-));
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
-
-const DialogContent = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-    <DialogPortal>
-        <DialogOverlay />
-        <DialogPrimitive.Content
-            ref={ref}
-            className={cn(
-                "fixed left-[50%] top-[50%] z-50 grid w-full max-w-[90vw] md:max-w-[800px] translate-x-[-50%] translate-y-[-50%] gap-4 border border-border bg-card p-0 shadow-xl duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 rounded-2xl",
-                className
-            )}
-            {...props}
-        >
-            {children}
-            <DialogPrimitive.Close className="absolute right-4 top-4 z-10 rounded-full bg-popover/80 p-2 hover:bg-popover transition-all">
-                <X className="h-5 w-5 text-muted-foreground hover:text-foreground" />
-                <span className="sr-only">Close</span>
-            </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-    </DialogPortal>
-));
-DialogContent.displayName = DialogPrimitive.Content.displayName;
-
-const DialogTitle = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Title>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-    <DialogPrimitive.Title
-        ref={ref}
-        className={cn("text-lg font-semibold leading-none tracking-tight text-foreground", className)}
-        {...props}
-    />
-));
-DialogTitle.displayName = DialogPrimitive.Title.displayName;
-
-// Button Component
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: "default" | "outline" | "ghost";
-    size?: "default" | "sm" | "lg" | "icon";
-}
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant = "default", size = "default", ...props }, ref) => {
-        const variantClasses = {
-            default: "bg-primary hover:bg-primary/80 text-primary-foreground",
-            outline: "border border-border bg-transparent hover:bg-accent",
-            ghost: "bg-transparent hover:bg-accent",
-        };
-        const sizeClasses = {
-            default: "h-10 px-4 py-2",
-            sm: "h-8 px-3 text-sm",
-            lg: "h-12 px-6",
-            icon: "h-8 w-8 rounded-full aspect-[1/1]",
-        };
-        return (
-            <button
-                className={cn(
-                    "inline-flex items-center justify-center font-mono transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
-                    variantClasses[variant],
-                    sizeClasses[size],
-                    className
-                )}
-                ref={ref}
-                {...props}
-            />
-        );
-    }
-);
-Button.displayName = "Button";
-
-// VoiceRecorder Component
-interface VoiceRecorderProps {
-    isRecording: boolean;
-    onStartRecording: () => void;
-    onStopRecording: (duration: number) => void;
-    visualizerBars?: number;
-}
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
-    isRecording,
-    onStartRecording,
-    onStopRecording,
-    visualizerBars = 32,
-}) => {
-    const [time, setTime] = React.useState(0);
-    const timerRef = React.useRef<NodeJS.Timeout | null>(null);
-
-    React.useEffect(() => {
-        if (isRecording) {
-            onStartRecording();
-            timerRef.current = setInterval(() => setTime((t) => t + 1), 1000);
-        } else {
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
-                timerRef.current = null;
-            }
-            onStopRecording(time);
-            setTime(0);
-        }
-        return () => {
-            if (timerRef.current) clearInterval(timerRef.current);
-        };
-    }, [isRecording, time, onStartRecording, onStopRecording]);
-
-    const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-    };
-
-    return (
-        <div
-            className={cn(
-                "flex flex-col items-center justify-center w-full transition-all duration-300 py-3",
-                isRecording ? "opacity-100" : "opacity-0 h-0"
-            )}
-        >
-            <div className="flex items-center gap-2 mb-3">
-                <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="font-mono text-sm text-foreground/80">{formatTime(time)}</span>
-            </div>
-            <div className="w-full h-10 flex items-center justify-center gap-0.5 px-4">
-                {[...Array(visualizerBars)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="w-0.5 rounded-full bg-foreground/50 animate-pulse"
-                        style={{
-                            height: `${Math.max(15, Math.random() * 100)}%`,
-                            animationDelay: `${i * 0.05}s`,
-                            animationDuration: `${0.5 + Math.random() * 0.5}s`,
-                        }}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-// ImageViewDialog Component
-interface ImageViewDialogProps {
-    imageUrl: string | null;
-    onClose: () => void;
-}
-const ImageViewDialog: React.FC<ImageViewDialogProps> = ({ imageUrl, onClose }) => {
-    if (!imageUrl) return null;
-    return (
-        <Dialog open={!!imageUrl} onOpenChange={onClose}>
-            <DialogContent className="p-0 border-none bg-transparent shadow-none max-w-[90vw] md:max-w-[800px]">
-                <DialogTitle className="sr-only">Image Preview</DialogTitle>
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="relative bg-card rounded-2xl overflow-hidden shadow-2xl"
-                >
-                    <img src={imageUrl} alt="Full preview" className="w-full max-h-[80vh] object-contain rounded-2xl" />
-                </motion.div>
-            </DialogContent>
-        </Dialog>
-    );
-};
+import { Suggestions, type Suggestion } from "./suggestions";
+import { Button } from "./button";
+import { Textarea } from "./textarea";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./tooltip";
+import { ImageViewDialog } from "./image-view-dialog";
 
 // PromptInput Context and Components
 interface PromptInputContextType {
@@ -261,6 +21,7 @@ interface PromptInputContextType {
     onSubmit?: () => void;
     disabled?: boolean;
 }
+
 const PromptInputContext = React.createContext<PromptInputContextType>({
     isLoading: false,
     value: "",
@@ -269,6 +30,7 @@ const PromptInputContext = React.createContext<PromptInputContextType>({
     onSubmit: undefined,
     disabled: false,
 });
+
 function usePromptInput() {
     const context = React.useContext(PromptInputContext);
     if (!context) throw new Error("usePromptInput must be used within a PromptInput");
@@ -288,6 +50,7 @@ interface PromptInputProps {
     onDragLeave?: (e: React.DragEvent) => void;
     onDrop?: (e: React.DragEvent) => void;
 }
+
 const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
     (
         {
@@ -325,8 +88,8 @@ const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
                     <div
                         ref={ref}
                         className={cn(
-                            "rounded-3xl border border-border bg-card px-2 shadow-lg transition-all duration-300",
-                            isLoading && "border-red-500/70",
+                            "rounded-xl border border-border/50 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm px-3 py-2 shadow-lg transition-all duration-300",
+                            isLoading && "border-red-500/50 shadow-red-500/20",
                             className
                         )}
                         onDragOver={onDragOver}
@@ -346,6 +109,7 @@ interface PromptInputTextareaProps {
     disableAutosize?: boolean;
     placeholder?: string;
 }
+
 const PromptInputTextarea: React.FC<PromptInputTextareaProps & React.ComponentProps<typeof Textarea>> = ({
     className,
     onKeyDown,
@@ -379,7 +143,10 @@ const PromptInputTextarea: React.FC<PromptInputTextareaProps & React.ComponentPr
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            className={cn("text-base", className)}
+            className={cn(
+                "text-base font-mono bg-transparent border-0 resize-none focus:ring-0 focus:outline-none",
+                className
+            )}
             disabled={disabled}
             placeholder={placeholder}
             {...props}
@@ -387,18 +154,13 @@ const PromptInputTextarea: React.FC<PromptInputTextareaProps & React.ComponentPr
     );
 };
 
-const PromptInputActions: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => (
-    <div className={cn("flex items-center gap-2", className)} {...props}>
-        {children}
-    </div>
-);
-
 interface PromptInputActionProps extends React.ComponentProps<typeof Tooltip> {
     tooltip: React.ReactNode;
     children: React.ReactNode;
     side?: "top" | "bottom" | "left" | "right";
     className?: string;
 }
+
 const PromptInputAction: React.FC<PromptInputActionProps> = ({
     tooltip,
     children,
@@ -419,75 +181,8 @@ const PromptInputAction: React.FC<PromptInputActionProps> = ({
     );
 };
 
-// Custom Divider Component
-const CustomDivider: React.FC = () => (
-    <div className="relative h-6 w-[1.5px] mx-1">
-        <div
-            className="absolute inset-0 bg-gradient-to-t from-transparent via-[#9b87f5]/70 to-transparent rounded-full"
-            style={{
-                clipPath:
-                    "polygon(0% 0%, 100% 0%, 100% 40%, 140% 50%, 100% 60%, 100% 100%, 0% 100%, 0% 60%, -40% 50%, 0% 40%)",
-            }}
-        />
-    </div>
-);
-
-// Suggestions Component
-export interface Suggestion {
-    id: string;
-    text: string;
-    icon?: React.ReactNode;
-}
-
-interface SuggestionsProps {
-    suggestions: Suggestion[];
-    onSelectSuggestion: (suggestion: Suggestion) => void;
-    className?: string;
-}
-
-const Suggestions: React.FC<SuggestionsProps> = ({ suggestions, onSelectSuggestion, className }) => {
-    if (suggestions.length === 0) return null;
-
-    return (
-        <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className={cn(
-                    "grid gap-2 mb-3 transition-all duration-300",
-                    "grid-cols-2 sm:grid-cols-4", // 2 columns on mobile, 4 on desktop
-                    className
-                )}
-            >
-                {suggestions.slice(0, 4).map((suggestion, index) => (
-                    <motion.button
-                        key={suggestion.id}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.05, duration: 0.2 }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => onSelectSuggestion(suggestion)}
-                        className={cn(
-                            "p-3 rounded-xl border border-border bg-card hover:bg-accent/50 transition-all duration-200",
-                            "text-left text-sm text-foreground/80 hover:text-foreground",
-                            "flex items-center gap-2 min-h-[48px]",
-                            "hidden", // Hide by default
-                            index < 2 ? "flex sm:flex" : "hidden sm:flex" // Show first 2 on mobile, all 4 on desktop
-                        )}
-                    >
-                        {suggestion.icon && (
-                            <span className="flex-shrink-0 text-muted-foreground">{suggestion.icon}</span>
-                        )}
-                        <span className="truncate font-medium">{suggestion.text}</span>
-                    </motion.button>
-                ))}
-            </motion.div>
-        </AnimatePresence>
-    );
-};
+// Voice chat state type
+type VoiceState = "idle" | "connecting" | "connected" | "speaking" | "listening" | "error";
 
 // Main PromptInputBox Component
 interface PromptInputBoxProps {
@@ -497,8 +192,10 @@ interface PromptInputBoxProps {
     className?: string;
     suggestions?: Suggestion[];
     onSelectSuggestion?: (suggestion: Suggestion) => void;
+    showDefaultSuggestions?: boolean;
 }
-export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref: React.Ref<HTMLDivElement>) => {
+
+export const PromptInputBox = React.forwardRef<HTMLDivElement, PromptInputBoxProps>((props, ref) => {
     const {
         onSend = () => {},
         isLoading = false,
@@ -506,45 +203,32 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
         className,
         suggestions = [],
         onSelectSuggestion = () => {},
+        showDefaultSuggestions = true,
     } = props;
+
     const [input, setInput] = React.useState("");
     const [files, setFiles] = React.useState<File[]>([]);
     const [filePreviews, setFilePreviews] = React.useState<{ [key: string]: string }>({});
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
-    const [isRecording, setIsRecording] = React.useState(false);
-    const [showSearch, setShowSearch] = React.useState(false);
-    const [showThink, setShowThink] = React.useState(false);
-    const [showCanvas, setShowCanvas] = React.useState(false);
-    const uploadInputRef = React.useRef<HTMLInputElement>(null);
+
+    // Voice conversation state
+    const [voiceState, setVoiceState] = React.useState<VoiceState>("idle");
+    const [voiceSession, setVoiceSession] = React.useState<RealtimeSession | null>(null);
+    const [voiceError, setVoiceError] = React.useState<string | null>(null);
+    const [lastUserMessage, setLastUserMessage] = React.useState("");
+    const [lastAIMessage, setLastAIMessage] = React.useState("");
+    const [isVoiceMode, setIsVoiceMode] = React.useState(false);
+
     const promptBoxRef = React.useRef<HTMLDivElement>(null);
 
-    const handleToggleChange = (value: string) => {
-        if (value === "search") {
-            setShowSearch((prev) => !prev);
-            setShowThink(false);
-        } else if (value === "think") {
-            setShowThink((prev) => !prev);
-            setShowSearch(false);
+    const processFile = React.useCallback(async (file: File) => {
+        try {
+            const preview = await processImageFile(file);
+            setFiles([file]);
+            setFilePreviews({ [file.name]: preview });
+        } catch (error) {
+            console.warn(error instanceof Error ? error.message : "File processing failed");
         }
-    };
-
-    const _handleCanvasToggle = () => setShowCanvas((prev) => !prev);
-
-    const isImageFile = (file: File) => file.type.startsWith("image/");
-
-    const processFile = React.useCallback((file: File) => {
-        if (!isImageFile(file)) {
-            console.warn("Only image files are allowed");
-            return;
-        }
-        if (file.size > 10 * 1024 * 1024) {
-            console.warn("File too large (max 10MB)");
-            return;
-        }
-        setFiles([file]);
-        const reader = new FileReader();
-        reader.onload = (e) => setFilePreviews({ [file.name]: e.target?.result as string });
-        reader.readAsDataURL(file);
     }, []);
 
     const handleDragOver = React.useCallback((e: React.DragEvent) => {
@@ -561,8 +245,7 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
         (e: React.DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
-            const files = Array.from(e.dataTransfer.files);
-            const imageFiles = files.filter((file) => isImageFile(file));
+            const imageFiles = getImageFilesFromItems(e.dataTransfer.items);
             if (imageFiles.length > 0) processFile(imageFiles[0]);
         },
         [processFile]
@@ -601,24 +284,11 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
 
     const handleSubmit = () => {
         if (input.trim() || files.length > 0) {
-            let messagePrefix = "";
-            if (showSearch) messagePrefix = "[Search: ";
-            else if (showThink) messagePrefix = "[Think: ";
-            else if (showCanvas) messagePrefix = "[Canvas: ";
-            const formattedInput = messagePrefix ? `${messagePrefix}${input}]` : input;
-            onSend(formattedInput, files);
+            onSend(input, files);
             setInput("");
             setFiles([]);
             setFilePreviews({});
         }
-    };
-
-    const handleStartRecording = () => console.warn("Started recording");
-
-    const handleStopRecording = (duration: number) => {
-        console.warn(`Stopped recording after ${duration} seconds`);
-        setIsRecording(false);
-        onSend(`[Voice message - ${duration} seconds]`, []);
     };
 
     const handleSelectSuggestion = (suggestion: Suggestion) => {
@@ -626,13 +296,215 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
         onSelectSuggestion(suggestion);
     };
 
+    // Voice conversation functions
+    const startVoiceConversation = async () => {
+        if (voiceState === "connecting" || voiceState === "connected") return;
+
+        setVoiceState("connecting");
+        setVoiceError(null);
+        setIsVoiceMode(true);
+
+        try {
+            // Get ephemeral token
+            const response = await fetch("/api/realtime/sessions", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "gpt-4o-realtime-preview-2025-06-03",
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to get token");
+            }
+
+            const { clientSecret } = await response.json();
+
+            // Create agent
+            const agent = new RealtimeAgent({
+                name: "Portfolio Assistant",
+                instructions:
+                    "You are a helpful AI assistant representing Simone Saletti's portfolio. Keep responses brief and engaging for voice conversations. You can help visitors learn about Simone's skills, projects, and experience.",
+                voice: "alloy",
+            });
+
+            // Create session
+            const session = new RealtimeSession(agent);
+
+            // Note: Event listeners will be set up after connection is established
+            console.log("Voice session created, connecting...");
+
+            // Connect with ephemeral token
+            await session.connect({ apiKey: clientSecret });
+
+            setVoiceSession(session);
+            setVoiceState("connected");
+        } catch (err) {
+            console.error("Voice connection failed:", err);
+            setVoiceError(err instanceof Error ? err.message : "Failed to connect");
+            setVoiceState("error");
+            setIsVoiceMode(false);
+        }
+    };
+
+    const stopVoiceConversation = () => {
+        if (voiceSession) {
+            voiceSession.close?.();
+            setVoiceSession(null);
+        }
+        setVoiceState("idle");
+        setIsVoiceMode(false);
+        setLastUserMessage("");
+        setLastAIMessage("");
+        setVoiceError(null);
+    };
+
+    const handleVoiceButtonClick = () => {
+        if (isVoiceMode) {
+            stopVoiceConversation();
+        } else if (input.trim() || files.length > 0) {
+            handleSubmit();
+        } else {
+            startVoiceConversation();
+        }
+    };
+
+    // Cleanup on unmount
+    React.useEffect(() => {
+        return () => {
+            if (voiceSession) {
+                voiceSession.close?.();
+            }
+        };
+    }, [voiceSession]);
+
     const hasContent = input.trim() !== "" || files.length > 0;
+
+    const getVoiceStateText = () => {
+        switch (voiceState) {
+            case "connecting":
+                return "Connecting...";
+            case "connected":
+                return "Connected - Ready to talk";
+            case "listening":
+                return "Listening...";
+            case "speaking":
+                return "AI is speaking...";
+            case "error":
+                return `Error: ${voiceError}`;
+            default:
+                return "Ready to start";
+        }
+    };
+
+    const getButtonIcon = () => {
+        if (isVoiceMode) {
+            switch (voiceState) {
+                case "connecting":
+                    return <Globe className="h-4 w-4 animate-spin" />;
+                case "speaking":
+                    return <Volume2 className="h-4 w-4 animate-pulse" />;
+                case "listening":
+                    return <Mic className="h-4 w-4 text-red-500 animate-pulse" />;
+                case "connected":
+                    return <StopCircle className="h-5 w-5" />;
+                case "error":
+                    return <Square className="h-4 w-4 text-destructive" />;
+                default:
+                    return <Mic className="h-4 w-4" />;
+            }
+        } else if (isLoading) {
+            return <Square className="h-4 w-4 fill-current animate-pulse" />;
+        } else if (hasContent) {
+            return <ArrowUp className="h-4 w-4" />;
+        } else {
+            return <Mic className="h-4 w-4" />;
+        }
+    };
+
+    const getButtonTooltip = () => {
+        if (isVoiceMode) {
+            return voiceState === "connected" ? "Stop voice conversation" : getVoiceStateText();
+        } else if (isLoading) {
+            return "Stop generation";
+        } else if (hasContent) {
+            return "Send message";
+        } else {
+            return "Start voice conversation";
+        }
+    };
 
     return (
         <>
+            {/* Voice mode status */}
+            {isVoiceMode && (
+                <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, type: "spring" }}
+                    className="mb-2 p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 border border-secondary/20 rounded-xl"
+                >
+                    <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                            <Volume2 className="h-5 w-5 text-secondary" />
+                            <span className="text-sm font-medium text-foreground font-technor">
+                                Voice Chat: <span className="text-secondary">{getVoiceStateText()}</span>
+                            </span>
+                        </div>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={stopVoiceConversation}
+                            className="h-7 px-3 text-xs text-secondary hover:text-secondary-foreground hover:bg-secondary/20 border border-secondary/20 rounded-lg font-technor transition-all duration-200"
+                        >
+                            <MessageSquare className="h-3 w-3 mr-1" />
+                            Switch to typing
+                        </Button>
+                    </div>
+                    {lastUserMessage && (
+                        <motion.div
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="text-xs text-muted-foreground mb-2 font-mono"
+                        >
+                            <strong className="text-foreground">You:</strong> {lastUserMessage}
+                        </motion.div>
+                    )}
+                    {lastAIMessage && (
+                        <motion.div
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-xs text-muted-foreground font-mono"
+                        >
+                            <strong className="text-secondary">AI:</strong> {lastAIMessage}
+                        </motion.div>
+                    )}
+                </motion.div>
+            )}
+
+            {/* Error display */}
+            {voiceError && (
+                <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, type: "spring" }}
+                    className="mb-2 p-3 bg-gradient-to-br from-destructive/10 to-destructive/5 border border-destructive/20 rounded-xl text-destructive text-sm font-technor"
+                >
+                    {voiceError}
+                </motion.div>
+            )}
+
             {/* Suggestions displayed above the input */}
-            {suggestions.length > 0 && !isRecording && (
-                <Suggestions suggestions={suggestions} onSelectSuggestion={handleSelectSuggestion} className="w-full" />
+            {!isVoiceMode && (
+                <Suggestions
+                    suggestions={suggestions}
+                    onSelectSuggestion={handleSelectSuggestion}
+                    className="w-full"
+                    showDefault={showDefaultSuggestions}
+                />
             )}
 
             <PromptInput
@@ -641,23 +513,34 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
                 isLoading={isLoading}
                 onSubmit={handleSubmit}
                 className={cn(
-                    "w-full bg-card border-border shadow-lg transition-all duration-300 ease-in-out",
-                    isRecording && "border-red-500/70",
+                    "w-full bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 ease-in-out rounded-xl",
+                    isVoiceMode && voiceState === "connected" && "border-secondary/50 shadow-secondary/20",
                     className
                 )}
-                disabled={isLoading || isRecording}
+                disabled={isLoading || isVoiceMode}
                 ref={ref || promptBoxRef}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
-                {files.length > 0 && !isRecording && (
-                    <div className="flex flex-wrap gap-2 p-0 pb-1 transition-all duration-300">
+                {files.length > 0 && !isVoiceMode && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex flex-wrap gap-3 p-2 pb-3 transition-all duration-300"
+                    >
                         {files.map((file, index) => (
-                            <div key={index} className="relative group">
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="relative group"
+                            >
                                 {file.type.startsWith("image/") && filePreviews[file.name] && (
                                     <div
-                                        className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-all duration-300"
+                                        className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 border border-secondary/20 shadow-sm"
                                         onClick={() => openImageModal(filePreviews[file.name])}
                                     >
                                         <img
@@ -670,88 +553,56 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
                                                 e.stopPropagation();
                                                 handleRemoveFile(index);
                                             }}
-                                            className="absolute top-1 right-1 rounded-full bg-background/70 p-0.5 opacity-100 transition-opacity"
+                                            className="absolute -top-1 -right-1 rounded-full bg-gradient-to-br from-background/90 to-background/70 p-1 opacity-100 transition-all duration-200 hover:scale-110 border border-border shadow-sm"
                                         >
                                             <X className="h-3 w-3 text-foreground" />
                                         </button>
                                     </div>
                                 )}
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 )}
 
                 <div
                     className={cn(
                         "transition-all duration-300",
-                        isRecording ? "h-0 overflow-hidden opacity-0" : "opacity-100"
+                        isVoiceMode ? "h-0 overflow-hidden opacity-0" : "opacity-100"
                     )}
                 >
                     <div className="flex items-center gap-2">
                         <div className="flex-1">
                             <PromptInputTextarea
-                                placeholder={
-                                    showSearch
-                                        ? "Search the web..."
-                                        : showThink
-                                        ? "Think deeply..."
-                                        : showCanvas
-                                        ? "Create on canvas..."
-                                        : placeholder
-                                }
+                                placeholder={isVoiceMode ? "Voice mode active..." : placeholder}
                                 className="text-base"
                             />
                         </div>
-                        <PromptInputAction
-                            tooltip={
-                                isLoading
-                                    ? "Stop generation"
-                                    : isRecording
-                                    ? "Stop recording"
-                                    : hasContent
-                                    ? "Send message"
-                                    : "Voice message"
-                            }
-                        >
-                            <Button
-                                variant="default"
-                                size="icon"
-                                className={cn(
-                                    "h-8 w-8 rounded-full transition-all duration-200 flex-shrink-0 flex items-center justify-center",
-                                    isRecording
-                                        ? "bg-transparent hover:bg-accent text-red-500 hover:text-red-400"
-                                        : hasContent
-                                        ? "bg-primary hover:bg-primary/80 text-primary-foreground"
-                                        : "bg-transparent hover:bg-accent text-muted-foreground hover:text-foreground"
-                                )}
-                                onClick={() => {
-                                    if (isRecording) setIsRecording(false);
-                                    else if (hasContent) handleSubmit();
-                                    else setIsRecording(true);
-                                }}
-                                disabled={isLoading && !hasContent}
+                        <PromptInputAction tooltip={getButtonTooltip()}>
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                             >
-                                {isLoading ? (
-                                    <Square className="h-4 w-4 fill-primary-foreground animate-pulse" />
-                                ) : isRecording ? (
-                                    <StopCircle className="h-5 w-5 text-red-500" />
-                                ) : hasContent ? (
-                                    <ArrowUp className="h-4 w-4 text-primary-foreground" />
-                                ) : (
-                                    <Mic className="h-4 w-4 text-primary-foreground transition-colors" />
-                                )}
-                            </Button>
+                                <Button
+                                    variant="default"
+                                    size="icon"
+                                    className={cn(
+                                        "h-9 w-9 rounded-xl transition-all duration-300 flex-shrink-0 flex items-center justify-center shadow-lg border border-transparent font-technor",
+                                        isVoiceMode
+                                            ? "bg-gradient-to-br from-secondary to-secondary/80 hover:from-secondary/90 hover:to-secondary/70 text-secondary-foreground border-secondary/30 shadow-secondary/25"
+                                            : hasContent
+                                            ? "bg-gradient-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground border-primary/30 shadow-primary/25"
+                                            : "bg-gradient-to-br from-secondary to-secondary/80 hover:from-secondary/90 hover:to-secondary/70 text-secondary-foreground border-secondary/30 shadow-secondary/25"
+                                    )}
+                                    onClick={handleVoiceButtonClick}
+                                    disabled={isLoading || voiceState === "connecting"}
+                                >
+                                    {getButtonIcon()}
+                                </Button>
+                            </motion.div>
                         </PromptInputAction>
                     </div>
                 </div>
-
-                {isRecording && (
-                    <VoiceRecorder
-                        isRecording={isRecording}
-                        onStartRecording={handleStartRecording}
-                        onStopRecording={handleStopRecording}
-                    />
-                )}
             </PromptInput>
 
             <ImageViewDialog imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />

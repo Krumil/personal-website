@@ -1,17 +1,19 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import * as React from "react";
 import { Github, Mail, Menu, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/routing";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
-const navigation = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Projects", href: "/projects" },
-    { name: "Blog", href: "/blog" },
-    { name: "Experience", href: "/experience" },
+const getNavigationItems = (t: (key: string) => string) => [
+    { name: t("home"), href: "/" },
+    { name: t("about"), href: "/about" },
+    { name: t("projects"), href: "/projects" },
+    { name: t("blog"), href: "/blog" },
+    { name: t("experience"), href: "/experience" },
 ];
 
 const socialLinks = [
@@ -20,8 +22,10 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
+    const t = useTranslations("navigation");
     const [isOpen, setIsOpen] = React.useState(false);
     const [scrolled, setScrolled] = React.useState(false);
+    const navigation = getNavigationItems(t);
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -102,12 +106,14 @@ export default function Navbar() {
 
                         <div className="mx-4 h-6 w-px bg-border" />
 
+                        <LanguageSwitcher variant="minimal" className="mr-3" />
+
                         <Button
                             asChild
                             size="sm"
-                            className="ml-4 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:shadow-lg"
+                            className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:shadow-lg"
                         >
-                            <Link href="/contact">Get In Touch</Link>
+                            <Link href="/contact">{t("getInTouch")}</Link>
                         </Button>
                     </div>
 
@@ -174,6 +180,11 @@ export default function Navbar() {
 
                         {/* Social Links and CTA */}
                         <div className="space-y-6">
+                            {/* Language Switcher */}
+                            <div className="flex justify-center">
+                                <LanguageSwitcher variant="default" />
+                            </div>
+
                             {/* Social Links */}
                             <div>
                                 <div className="flex justify-center space-x-4">
@@ -204,7 +215,7 @@ export default function Navbar() {
                                     className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 text-base font-medium"
                                 >
                                     <Link href="/contact" onClick={() => setIsOpen(false)}>
-                                        Get In Touch
+                                        {t("getInTouch")}
                                     </Link>
                                 </Button>
                             </div>

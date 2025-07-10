@@ -1,0 +1,165 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "retry": "Riprova",
+    "close": "Chiudi",
+    "submit": "Invia",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "confirm": "Conferma",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "home": "Home",
+    "about": "Chi Sono",
+    "contact": "Contatti",
+    "projects": "Progetti",
+    "skills": "Competenze",
+    "experience": "Esperienza",
+    "resume": "Curriculum",
+    "portfolio": "Portfolio"
+  },
+  "navigation": {
+    "toggleLanguage": "Passa all'inglese",
+    "currentLanguage": "Italiano",
+    "languageCode": "it",
+    "home": "Home",
+    "about": "Chi Sono",
+    "projects": "Progetti",
+    "blog": "Blog",
+    "experience": "Esperienza",
+    "getInTouch": "Contattami",
+    "ai": "Progetti IA",
+    "blockchain": "Blockchain",
+    "fullstack": "Sviluppo Completo",
+    "menuOpen": "Apri menu",
+    "menuClose": "Chiudi menu"
+  },
+  "hero": {
+    "title": "Ciao, sono Simone Saletti",
+    "subtitle": "Sviluppatore Full-Stack & Appassionato di IA",
+    "description": "Appassionato di creare soluzioni innovative con tecnologie all'avanguardia",
+    "cta": "Esplora i Miei Lavori",
+    "welcomeMessage": "Benvenuto nel mio portfolio digitale"
+  },
+  "chat": {
+    "title": "Chatta con il mio Assistente IA",
+    "subtitle": "Chiedi dei miei progetti, competenze o qualsiasi altra cosa!",
+    "placeholder": "Scrivi il tuo messaggio qui...",
+    "voiceMode": "Modalità vocale attiva...",
+    "sendMessage": "Invia messaggio",
+    "startVoiceConversation": "Inizia conversazione vocale",
+    "stopConversation": "Ferma conversazione",
+    "switchToTyping": "Passa alla scrittura",
+    "voiceChat": "Chat Vocale",
+    "listening": "In ascolto...",
+    "thinking": "IA sta pensando...",
+    "speaking": "IA sta parlando...",
+    "transcribing": "Trascrizione...",
+    "connecting": "Connessione...",
+    "connected": "Connesso - Pronto a parlare",
+    "ready": "Pronto",
+    "inactive": "Inattivo",
+    "streamingTranscription": "Trascrizione in tempo reale...",
+    "transcribingAudio": "Trascrizione audio...",
+    "stopRecording": "Ferma registrazione",
+    "stopGeneration": "Ferma generazione"
+  },
+  "suggestions": {
+    "whatCanYouDo": "Cosa sai fare?",
+    "tellMeAboutProjects": "Parlami dei tuoi progetti",
+    "whatTechnologies": "Che tecnologie usi?",
+    "howToContact": "Come posso contattarti?",
+    "showResume": "Mostrami il tuo curriculum",
+    "explainExperience": "Spiega la tua esperienza"
+  },
+  "projects": {
+    "ai": {
+      "title": "IA & Machine Learning",
+      "description": "Soluzioni innovative di IA e progetti di machine learning",
+      "viewProject": "Vedi Progetto",
+      "learnMore": "Scopri di Più",
+      "technologies": "Tecnologie",
+      "status": "Stato",
+      "completed": "Completato",
+      "inProgress": "In Corso",
+      "planning": "In Pianificazione"
+    },
+    "blockchain": {
+      "title": "Blockchain & Web3",
+      "description": "Applicazioni decentralizzate e soluzioni blockchain",
+      "viewProject": "Vedi Progetto",
+      "learnMore": "Scopri di Più"
+    },
+    "fullstack": {
+      "title": "Sviluppo Full-Stack",
+      "description": "Applicazioni web complete e soluzioni software",
+      "viewProject": "Vedi Progetto",
+      "learnMore": "Scopri di Più"
+    }
+  },
+  "contact": {
+    "title": "Mettiamoci in Contatto",
+    "subtitle": "Parliamo del tuo prossimo progetto",
+    "form": {
+      "name": "Il Tuo Nome",
+      "namePlaceholder": "Inserisci il tuo nome completo",
+      "email": "La Tua Email",
+      "emailPlaceholder": "Inserisci il tuo indirizzo email",
+      "subject": "Oggetto",
+      "subjectPlaceholder": "Di cosa si tratta?",
+      "message": "Il Tuo Messaggio",
+      "messagePlaceholder": "Parlami del tuo progetto o richiesta...",
+      "send": "Invia Messaggio",
+      "sending": "Invio in corso...",
+      "success": "Messaggio inviato con successo!",
+      "error": "Invio fallito. Riprova per favore."
+    },
+    "info": {
+      "title": "Informazioni di Contatto",
+      "email": "Email",
+      "location": "Posizione",
+      "availability": "Disponibilità",
+      "availabilityStatus": "Disponibile per nuovi progetti",
+      "socialMedia": "Seguimi"
+    }
+  },
+  "about": {
+    "title": "Chi Sono",
+    "subtitle": "Sviluppatore appassionato con amore per l'innovazione",
+    "description": "Sono uno sviluppatore full-stack con competenze nelle moderne tecnologie web, IA e sviluppo blockchain. Mi piace creare soluzioni innovative che risolvono problemi del mondo reale.",
+    "skills": "Competenze & Tecnologie",
+    "experience": "Esperienza",
+    "education": "Formazione",
+    "certifications": "Certificazioni"
+  },
+  "footer": {
+    "copyright": "© 2024 Simone Saletti. Tutti i diritti riservati.",
+    "madeWith": "Realizzato con",
+    "and": "e",
+    "poweredBy": "Powered by"
+  },
+  "meta": {
+    "title": "Simone Saletti - Sviluppatore Full-Stack & Appassionato di IA",
+    "description": "Portfolio di Simone Saletti, uno sviluppatore full-stack appassionato specializzato in IA, blockchain e moderne tecnologie web.",
+    "keywords": "sviluppatore full-stack, IA, blockchain, sviluppo web, React, Next.js, TypeScript, machine learning"
+  },
+  "errors": {
+    "pageNotFound": "Pagina non trovata",
+    "somethingWentWrong": "Qualcosa è andato storto",
+    "tryAgain": "Riprova",
+    "goHome": "Vai alla homepage",
+    "networkError": "Errore di rete. Controlla la tua connessione.",
+    "serverError": "Errore del server. Riprova più tardi.",
+    "validationError": "Controlla i tuoi dati e riprova."
+  },
+  "accessibility": {
+    "skipToContent": "Salta al contenuto principale",
+    "openInNewTab": "Apre in una nuova scheda",
+    "closeDialog": "Chiudi finestra",
+    "toggleMenu": "Attiva/disattiva menu di navigazione"
+  }
+}

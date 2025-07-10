@@ -1,10 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { ExternalLink, Github, Star, GitFork, Sparkles, Code, Play, Wrench } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Star, GitFork, Sparkles, Code, Play, Wrench } from "lucide-react";
-import { useState, useEffect } from "react";
 
 interface Project {
     id: string;

@@ -16,7 +16,7 @@ export default function Homepage() {
     const { messages, append } = useChat();
     const [chatStarted, setChatStarted] = useState(false);
     const [animationEnabled, setAnimationEnabled] = useState(true);
-    const [animationButtonEnabled, setAnimationButtonEnabled] = useState(false);
+    const [animationButtonEnabled, _setAnimationButtonEnabled] = useState(false);
 
     // Custom submit handler to track when chat starts
     const handleSendMessage = async (message: string, _files?: File[]) => {
@@ -41,7 +41,7 @@ export default function Homepage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
-                className="min-h-screen md:bg-background text-black dark:text-white transition-colors overflow-hidden"
+                className="min-h-screen bg-background text-black dark:text-white transition-colors overflow-hidden"
             >
                 <div className="relative h-screen flex flex-col justify-center">
                     <HoleBackground
@@ -82,7 +82,7 @@ export default function Homepage() {
                             className="max-w-4xl mx-auto w-full relative z-10"
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 2.2, duration: 0.6 }}
+                            transition={{ delay: 1, duration: 0.6 }}
                         >
                             <PromptInputBox onSend={handleSendMessage} />
                         </motion.div>
