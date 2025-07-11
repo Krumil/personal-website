@@ -24,17 +24,17 @@ export const routing = defineRouting({
             en: "/contact",
             it: "/contatti",
         },
-        "/ai": {
-            en: "/ai",
-            it: "/intelligenza-artificiale",
+        "/projects": {
+            en: "/projects",
+            it: "/progetti",
         },
-        "/blockchain": {
-            en: "/blockchain",
-            it: "/blockchain",
+        "/blog": {
+            en: "/blog",
+            it: "/blog",
         },
-        "/fullstack": {
-            en: "/fullstack",
-            it: "/sviluppo-completo",
+        "/experience": {
+            en: "/experience",
+            it: "/esperienza",
         },
     },
 });

@@ -41,3 +41,12 @@ yarn-error.log*
 next-env.d.ts
 *.Zone.Identifier
 *:Zone.Identifier
+
+#AI assistant files
+.claude/
+CLAUDE.md
+GEMINI.md
+
+# VSCode settings
+.vscode/
+

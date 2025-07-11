@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
-type RouteHref = "/" | "/about" | "/contact" | "/ai" | "/blockchain" | "/fullstack";
+type RouteHref = "/" | "/about" | "/projects" | "/blog" | "/experience";
 
 interface NavigationItem {
     name: string;
@@ -18,9 +18,9 @@ interface NavigationItem {
 const getNavigationItems = (t: (key: string) => string): NavigationItem[] => [
     { name: t("home"), href: "/" },
     { name: t("about"), href: "/about" },
-    { name: t("ai"), href: "/ai" },
-    { name: t("blockchain"), href: "/blockchain" },
-    { name: t("fullstack"), href: "/fullstack" },
+    { name: t("projects"), href: "/projects" },
+    { name: t("blog"), href: "/blog" },
+    { name: t("experience"), href: "/experience" },
 ];
 
 const socialLinks = [

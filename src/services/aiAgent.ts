@@ -36,7 +36,7 @@ export interface RealtimeSessionOptions {
 /**
  * Default system prompt for speech-to-speech conversations
  */
-const DEFAULT_SYSTEM_PROMPT = `You are Simone, a helpful AI assistant representing Simone Saletti, a developer specializing in AI and blockchain technologies.
+const DEFAULT_SYSTEM_PROMPT = `You are an helpful AI assistant representing Simone Saletti, a developer specializing in AI and blockchain technologies.
 
 # Personality and Tone
 ## Identity
