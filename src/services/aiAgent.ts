@@ -1,4 +1,5 @@
 import { RealtimeAgent, RealtimeSession } from "@openai/agents/realtime";
+import type { Tool } from "@openai/agents";
 
 export interface ChatMessage {
     role: "system" | "user" | "assistant";
@@ -23,7 +24,7 @@ export interface ConversationContext {
 export interface RealtimeAgentOptions {
     instructions?: string;
     voice?: "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
-    tools?: any[];
+    tools?: Tool[];
 }
 
 export interface RealtimeSessionOptions {
@@ -301,7 +302,7 @@ export function createPortfolioTools() {
                     },
                 },
             },
-            invoke: async (_: any, input: string) => {
+            invoke: async (_: unknown, input: string) => {
                 const parameters = JSON.parse(input);
                 return getProjectInfo(parameters);
             },
@@ -320,7 +321,7 @@ export function createPortfolioTools() {
                     },
                 },
             },
-            invoke: async (_: any, input: string) => {
+            invoke: async (_: unknown, input: string) => {
                 const parameters = JSON.parse(input);
                 return getContactInfo(parameters);
             },
@@ -339,7 +340,7 @@ export function createPortfolioTools() {
                     },
                 },
             },
-            invoke: async (_: any, input: string) => {
+            invoke: async (_: unknown, input: string) => {
                 const parameters = JSON.parse(input);
                 return getExperienceInfo(parameters);
             },

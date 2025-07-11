@@ -8,17 +8,24 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
-const getNavigationItems = (t: (key: string) => string) => [
+type RouteHref = "/" | "/about" | "/contact" | "/ai" | "/blockchain" | "/fullstack";
+
+interface NavigationItem {
+    name: string;
+    href: RouteHref;
+}
+
+const getNavigationItems = (t: (key: string) => string): NavigationItem[] => [
     { name: t("home"), href: "/" },
     { name: t("about"), href: "/about" },
-    { name: t("projects"), href: "/projects" },
-    { name: t("blog"), href: "/blog" },
-    { name: t("experience"), href: "/experience" },
+    { name: t("ai"), href: "/ai" },
+    { name: t("blockchain"), href: "/blockchain" },
+    { name: t("fullstack"), href: "/fullstack" },
 ];
 
 const socialLinks = [
-    { name: "GitHub", href: "https://github.com", icon: Github },
-    { name: "Email", href: "mailto:hello@example.com", icon: Mail },
+    { name: "GitHub", href: "https://github.com/Krumil", icon: Github },
+    { name: "Email", href: "mailto:krumil018@gmail.com", icon: Mail },
 ];
 
 export default function Navbar() {
@@ -87,7 +94,7 @@ export default function Navbar() {
                             <span className="sm:hidden text-xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                                 Simone
                             </span>
-                            <div className="sm:hidden text-xs text-muted-foreground">Developer</div>
+                            <div className="sm:hidden text-xs text-muted-foreground">@Krumil</div>
                         </div>
                     </Link>
 
@@ -198,10 +205,10 @@ export default function Navbar() {
                                                 asChild
                                                 className="h-12 w-12 hover:scale-105 hover:bg-accent/50 transition-all duration-200"
                                             >
-                                                <Link href={social.href} target="_blank" rel="noopener noreferrer">
+                                                <a href={social.href} target="_blank" rel="noopener noreferrer">
                                                     <Icon className="h-6 w-6" />
                                                     <span className="sr-only">{social.name}</span>
-                                                </Link>
+                                                </a>
                                             </Button>
                                         );
                                     })}

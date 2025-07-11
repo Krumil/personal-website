@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
             },
             body: JSON.stringify({
                 model,
-                voice: "alloy", // Default voice
             }),
         });
 

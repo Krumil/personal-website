@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
 
@@ -23,7 +24,13 @@ export const ImageViewDialog: React.FC<ImageViewDialogProps> = ({ imageUrl, onCl
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="relative bg-card rounded-2xl overflow-hidden shadow-2xl"
                 >
-                    <img src={imageUrl} alt="Full preview" className="w-full max-h-[80vh] object-contain rounded-2xl" />
+                    <Image
+                        src={imageUrl}
+                        alt="Full preview"
+                        className="w-full max-h-[80vh] object-contain rounded-2xl"
+                        width={1000}
+                        height={1000}
+                    />
                 </motion.div>
             </DialogContent>
         </Dialog>

@@ -14,13 +14,7 @@ interface PageLayoutProps {
     children: React.ReactNode;
 }
 
-export default function PageLayout({
-    title,
-    subtitle,
-    description,
-    tags,
-    children,
-}: PageLayoutProps) {
+export default function PageLayout({ title, subtitle, description, tags, children }: PageLayoutProps) {
     return (
         <div className="min-h-screen bg-black text-white">
             {/* Navigation */}

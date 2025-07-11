@@ -1,37 +1,34 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { useLocale, useTranslations } from 'next-intl';
-import { Globe } from 'lucide-react';
+import React from "react";
+import { motion } from "motion/react";
+import { useLocale, useTranslations } from "next-intl";
+import { Globe } from "lucide-react";
 
-import { usePathname, useRouter } from '@/i18n/routing';
+import { cn } from "@/lib/utils";
+import { usePathname, useRouter } from "@/i18n/routing";
 
-import { cn } from '@/lib/utils';
-import { Button } from './button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+import { Button } from "./button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 interface LanguageSwitcherProps {
     className?: string;
-    variant?: 'default' | 'minimal' | 'icon';
+    variant?: "default" | "minimal" | "icon";
 }
 
-export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ 
-    className, 
-    variant = 'default' 
-}) => {
-    const t = useTranslations('navigation');
+export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className, variant = "default" }) => {
+    const t = useTranslations("navigation");
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
 
     const toggleLanguage = () => {
-        const newLocale = locale === 'en' ? 'it' : 'en';
+        const newLocale = locale === "en" ? "it" : "en";
         router.replace(pathname, { locale: newLocale });
     };
 
-    const currentLanguage = locale === 'en' ? 'English' : 'Italiano';
-    const flagEmoji = locale === 'en' ? '🇺🇸' : '🇮🇹';
+    const currentLanguage = locale === "en" ? "English" : "Italiano";
+    const flagEmoji = locale === "en" ? "🇺🇸" : "🇮🇹";
 
-    if (variant === 'icon') {
+    if (variant === "icon") {
         return (
             <TooltipProvider>
                 <Tooltip>
@@ -49,7 +46,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                                     "h-9 w-9 rounded-xl bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm border border-border/50 hover:border-secondary/50 transition-all duration-300 shadow-sm hover:shadow-secondary/10",
                                     className
                                 )}
-                                aria-label={t('toggleLanguage')}
+                                aria-label={t("toggleLanguage")}
                             >
                                 <span className="text-lg font-medium" role="img" aria-label={currentLanguage}>
                                     {flagEmoji}
@@ -58,14 +55,14 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                         </motion.div>
                     </TooltipTrigger>
                     <TooltipContent>
-                        <span className="font-technor">{t('toggleLanguage')}</span>
+                        <span className="font-technor">{t("toggleLanguage")}</span>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
         );
     }
 
-    if (variant === 'minimal') {
+    if (variant === "minimal") {
         return (
             <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -103,9 +100,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                 <span className="text-base mr-2" role="img" aria-label={currentLanguage}>
                     {flagEmoji}
                 </span>
-                <span className="text-sm font-medium">
-                    {currentLanguage}
-                </span>
+                <span className="text-sm font-medium">{currentLanguage}</span>
                 <Globe className="h-4 w-4 ml-2 text-secondary opacity-70" />
             </Button>
         </motion.div>

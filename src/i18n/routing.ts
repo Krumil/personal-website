@@ -1,45 +1,44 @@
-import { defineRouting } from 'next-intl/routing';
-import { createNavigation } from 'next-intl/navigation';
+import { defineRouting } from "next-intl/routing";
+import { createNavigation } from "next-intl/navigation";
 
 export const routing = defineRouting({
     // A list of all locales that are supported
-    locales: ['en', 'it'],
+    locales: ["en", "it"],
 
     // Used when no locale matches
-    defaultLocale: 'en',
+    defaultLocale: "en",
 
     // Hide the default locale from the URL
     localePrefix: {
-        mode: 'as-needed'
+        mode: "as-needed",
     },
 
     // When this is used on subpaths (e.g. /en/about)
     pathnames: {
-        '/': '/',
-        '/about': {
-            en: '/about',
-            it: '/chi-sono'
+        "/": "/",
+        "/about": {
+            en: "/about",
+            it: "/chi-sono",
         },
-        '/contact': {
-            en: '/contact',
-            it: '/contatti'
+        "/contact": {
+            en: "/contact",
+            it: "/contatti",
         },
-        '/ai': {
-            en: '/ai',
-            it: '/intelligenza-artificiale'
+        "/ai": {
+            en: "/ai",
+            it: "/intelligenza-artificiale",
         },
-        '/blockchain': {
-            en: '/blockchain',
-            it: '/blockchain'
+        "/blockchain": {
+            en: "/blockchain",
+            it: "/blockchain",
         },
-        '/fullstack': {
-            en: '/fullstack',
-            it: '/sviluppo-completo'
-        }
-    }
+        "/fullstack": {
+            en: "/fullstack",
+            it: "/sviluppo-completo",
+        },
+    },
 });
 
 // Lightweight wrappers around Next.js' navigation APIs
 // that will consider the routing configuration
-export const { Link, redirect, usePathname, useRouter } =
-    createNavigation(routing);
+export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);

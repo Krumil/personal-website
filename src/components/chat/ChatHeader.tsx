@@ -6,12 +6,11 @@ import { LineShadowText } from "@/components/ui/line-shadow-text";
 export const ChatHeader = () => {
     return (
         <div className="size-full items-center justify-center overflow-hidden pt-8">
-            <BoxReveal boxColor={"#f2612e"} duration={0.5}>
+            <BoxReveal boxColor={"#f2612e"} duration={0.5} width="100%">
                 <p className="text-[2.5rem] md:text-9xl font-bold font-mono">
                     Hi, I'm{" "}
                     <span className="text-primary italic">
-                        Simone
-                        {/* <LineShadowText shadowColor="#f2612e">Simone</LineShadowText> */}
+                        <LineShadowText shadowColor="#f2612e">Simone</LineShadowText>
                     </span>
                 </p>
             </BoxReveal>
