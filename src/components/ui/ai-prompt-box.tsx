@@ -209,6 +209,11 @@ export const PromptInputBox = React.forwardRef<HTMLDivElement, PromptInputBoxPro
     const handleSelectSuggestion = (suggestion: Suggestion) => {
         setInput(suggestion.text);
         onSelectSuggestion(suggestion);
+        // Auto-send the message
+        onSend(suggestion.text, files);
+        setInput("");
+        setFiles([]);
+        setFilePreviews({});
     };
 
     const handleVoiceClick = () => {
