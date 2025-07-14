@@ -60,7 +60,7 @@ export const ChatMessages = ({ messages }: ChatMessagesProps) => {
     return (
         <motion.div
             ref={containerRef}
-            className="flex-1 overflow-y-auto mb-6 space-y-6 p-4 chat-scrollba font-sans"
+            className="flex-1 overflow-y-auto mb-6 space-y-6 p-4 chat-scrollbar font-sans min-h-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
