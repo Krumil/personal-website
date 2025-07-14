@@ -36,20 +36,20 @@ export default function Homepage() {
 
         // Listen for viewport changes
         if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', updateHeight);
-            window.visualViewport.addEventListener('scroll', updateHeight);
+            window.visualViewport.addEventListener("resize", updateHeight);
+            window.visualViewport.addEventListener("scroll", updateHeight);
         } else {
-            window.addEventListener('resize', updateHeight);
-            window.addEventListener('orientationchange', updateHeight);
+            window.addEventListener("resize", updateHeight);
+            window.addEventListener("orientationchange", updateHeight);
         }
 
         return () => {
             if (window.visualViewport) {
-                window.visualViewport.removeEventListener('resize', updateHeight);
-                window.visualViewport.removeEventListener('scroll', updateHeight);
+                window.visualViewport.removeEventListener("resize", updateHeight);
+                window.visualViewport.removeEventListener("scroll", updateHeight);
             } else {
-                window.removeEventListener('resize', updateHeight);
-                window.removeEventListener('orientationchange', updateHeight);
+                window.removeEventListener("resize", updateHeight);
+                window.removeEventListener("orientationchange", updateHeight);
             }
         };
     }, []);
@@ -77,15 +77,17 @@ export default function Homepage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
-                className="min-h-dvh bg-background text-black dark:text-white transition-colors overflow-hidden safe-all"
-                style={{ 
-                    minHeight: viewportHeight ? `${viewportHeight}px` : '100dvh' 
+                className="bg-background text-black dark:text-white transition-colors overflow-hidden"
+                style={{
+                    height: viewportHeight ? `${viewportHeight}px` : "100dvh",
                 }}
             >
-                <div className="relative h-dvh flex flex-col justify-center container-adaptive"
-                     style={{ 
-                         height: viewportHeight ? `${viewportHeight}px` : '100dvh' 
-                     }}>
+                <div
+                    className="relative flex flex-col justify-center container-adaptive"
+                    style={{
+                        height: viewportHeight ? `${viewportHeight}px` : "100dvh",
+                    }}
+                >
                     <HoleBackground
                         strokeColor="#d4d4d4"
                         animationIntensity={animationEnabled ? 0.3 : 0}

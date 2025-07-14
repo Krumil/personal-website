@@ -271,11 +271,6 @@
         font-size: 1.125rem; /* 18px */
         /* Prevent horizontal scrolling */
         overflow-x: hidden;
-        /* Safe area support for notched devices */
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
     }
 
     h1,
