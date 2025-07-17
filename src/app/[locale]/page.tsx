@@ -77,17 +77,12 @@ export default function Homepage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
-                className="bg-background text-black dark:text-white transition-colors overflow-hidden"
+                className="bg-background text-black dark:text-white transition-colors overflow-hidden fixed inset-0"
                 style={{
                     height: viewportHeight ? `${viewportHeight}px` : "100dvh",
                 }}
             >
-                <div
-                    className="relative flex flex-col justify-center container-adaptive"
-                    style={{
-                        height: viewportHeight ? `${viewportHeight}px` : "100dvh",
-                    }}
-                >
+                <div className="relative flex flex-col justify-center h-full overflow-hidden">
                     <HoleBackground
                         strokeColor="#d4d4d4"
                         animationIntensity={animationEnabled ? 0.3 : 0}
